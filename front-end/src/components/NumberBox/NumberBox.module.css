@@ -1,0 +1,17 @@
+.NumberBox {
+    width: 10%;
+    height: 100%;
+    float: left;
+    outline: 1px solid black;
+}
+
+.NumberBox:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.Number {
+    font-size: 5vh;
+    margin-top: 1.5vh;
+    text-align: center;
+}

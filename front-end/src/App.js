@@ -1,8 +1,8 @@
-function App() {
+import GameBoard from './components/GameBoard/GameBoard';
+
+const App = () => {
 	return (
-		<div>
-			<h1>Hello from app</h1>
-		</div>
+		<GameBoard />
 	);
 }
 
