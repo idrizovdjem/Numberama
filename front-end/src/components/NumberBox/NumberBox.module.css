@@ -1,8 +1,9 @@
 .NumberBox {
     width: 10%;
-    height: 100%;
     float: left;
     outline: 1px solid black;
+    user-select: none;
+    height: 8vh;
 }
 
 .NumberBox:hover {
@@ -14,4 +15,11 @@
     font-size: 5vh;
     margin-top: 1.5vh;
     text-align: center;
+}
+
+.Cross {
+    font-size: 5vh;
+    color: red;
+    margin-top: 1.5vh;
+    margin-left: 3.5vh;
 }

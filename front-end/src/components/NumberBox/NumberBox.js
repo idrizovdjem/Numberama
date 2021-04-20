@@ -1,9 +1,24 @@
 import classes from './NumberBox.module.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+
 const NumberBox = (props) => {
+    const selectBoxHandler = () => {
+        if(props.number === 0) {
+            return;
+        }
+        
+        props.selectBox(props.row, props.index);
+    }
+    
     return(
-        <div className={classes.NumberBox}>
-            <div className={classes.Number}>{props.number}</div>
+        <div onClick={selectBoxHandler} className={classes.NumberBox}>
+            {
+                props.number ? 
+                <div className={classes.Number}>{props.number}</div> :
+                <FontAwesomeIcon icon={faTimes} className={classes.Cross} />
+            }
         </div>
     );
 }
