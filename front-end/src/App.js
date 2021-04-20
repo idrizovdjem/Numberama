@@ -1,8 +1,19 @@
+import { Fragment, useState } from 'react';
 import GameBoard from './components/GameBoard/GameBoard';
+import SideBar from './components/SideBar/SideBar';
 
 const App = () => {
+	const [score, setScore] = useState(0);
+
+	const updateScore = (points) => {
+		setScore(oldScore => oldScore + points);
+	}
+
 	return (
-		<GameBoard />
+		<Fragment>
+			<SideBar score={score} />
+			<GameBoard updateScore={updateScore} />
+		</Fragment>
 	);
 }
 

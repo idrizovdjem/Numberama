@@ -6,7 +6,7 @@ import numberService from '../../services/numberService.js';
 import GameButtons from '../GameButtons/GameButtons';
 import NumberRow from '../NumberRow/NumberRow';
 
-const GameBoard = () => {
+const GameBoard = (props) => {
     const initialRow = numberService.generateRow();
     const [gameBoard, setGameBoard] = useState([initialRow]);
     //const [gameBoard, setGameBoard] = useState([[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [9, 9, 8, 6, 5, 4, 3, 2, 1, 0]]);
@@ -46,9 +46,6 @@ const GameBoard = () => {
                 higherRow = row;
                 higherColumn = col;
             }
-
-            // console.log(`Lower Row: ${lowerRow} and Lower Column: ${lowerColumn}`);
-            // console.log(`Higher Row: ${higherRow} and Higher Column: ${higherColumn}`);
 
             const firstValue = gameBoard[lowerRow][lowerColumn];
             const secondValue = gameBoard[higherRow][higherColumn];
@@ -91,6 +88,7 @@ const GameBoard = () => {
                     return newGameBoard;
                 });
 
+                props.updateScore(firstValue + secondValue);
                 setSelectedBox(null);
                 return;
             }
@@ -121,6 +119,7 @@ const GameBoard = () => {
                     return newGameBoard;
                 });
 
+                props.updateScore(firstValue + secondValue);
                 setSelectedBox(null);
                 return;
             }

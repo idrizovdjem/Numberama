@@ -1,0 +1,13 @@
+.SideBar {
+    float: left;
+    width: 25%;
+    height: 100vh;
+    background-color: gray;
+    text-align: center;
+}
+
+.Score {
+    margin: 2vh 0;
+    padding: 0;
+    font-size: 4vh;
+}
