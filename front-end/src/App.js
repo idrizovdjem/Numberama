@@ -1,6 +1,7 @@
-import { Fragment, useState } from 'react';
-import GameBoard from './components/GameBoard/GameBoard';
-import SideBar from './components/SideBar/SideBar';
+import { useState } from 'react';
+import Game from './components/Game/Game';
+
+import ScoreContext from './context/scoreContext';
 
 const App = () => {
 	const [score, setScore] = useState(0);
@@ -10,10 +11,9 @@ const App = () => {
 	}
 
 	return (
-		<Fragment>
-			<SideBar score={score} />
-			<GameBoard updateScore={updateScore} />
-		</Fragment>
+		<ScoreContext.Provider value={{ score, updateScore }}>
+			<Game />
+		</ScoreContext.Provider>
 	);
 }
 

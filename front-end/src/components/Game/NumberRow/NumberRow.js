@@ -1,6 +1,6 @@
 import classes from './NumberRow.module.css';
 
-import NumberBox from '../NumberBox/NumberBox';
+import NumberBox from './NumberBox/NumberBox';
 
 const NumberRow = (props) => {
     const boxes = [];

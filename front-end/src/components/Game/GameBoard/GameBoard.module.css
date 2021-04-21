@@ -2,8 +2,7 @@
     float: left;
     width: 50%;
     margin: auto;
+    height: 90vh;
+    overflow-y: auto;
     margin-left: 25vh;
-}
-
-@media only screen and (max-width: 400px) {
 }

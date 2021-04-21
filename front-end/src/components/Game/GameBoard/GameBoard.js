@@ -1,7 +1,7 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import classes from './GameBoard.module.css';
 
-import numberService from '../../services/numberService.js';
+import numberService from '../../../services/numberService.js';
 
 import GameButtons from '../GameButtons/GameButtons';
 import NumberRow from '../NumberRow/NumberRow';
@@ -9,7 +9,6 @@ import NumberRow from '../NumberRow/NumberRow';
 const GameBoard = (props) => {
     const initialRow = numberService.generateRow();
     const [gameBoard, setGameBoard] = useState([initialRow]);
-    //const [gameBoard, setGameBoard] = useState([[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [9, 9, 8, 6, 5, 4, 3, 2, 1, 0]]);
     const [selectedBox, setSelectedBox] = useState(null);
 
     const addNewRowHandle = () => {
@@ -27,6 +26,7 @@ const GameBoard = (props) => {
             setSelectedBox({ row, col });
         } else {
             if (selectedBox.row === row && selectedBox.col === col) {
+                setSelectedBox({ row, col });
                 return;
             }
 
@@ -51,7 +51,7 @@ const GameBoard = (props) => {
             const secondValue = gameBoard[higherRow][higherColumn];
 
             if (firstValue !== secondValue && firstValue + secondValue !== 10) {
-                setSelectedBox(null);
+                setSelectedBox({ row, col });
                 return;
             }
 
@@ -93,9 +93,9 @@ const GameBoard = (props) => {
                 return;
             }
 
-            if(lowerColumn !== higherColumn) {
+            if (lowerColumn !== higherColumn) {
                 setSelectedBox(null);
-                return;   
+                return;
             }
 
             let isPossibleVerticaly = true;
@@ -142,12 +142,12 @@ const GameBoard = (props) => {
     });
 
     return (
-        <Fragment>
+        <>
             <GameButtons addRow={addNewRowHandle} />
             <div className={classes.GameBoard}>
                 {rows}
             </div>
-        </Fragment>
+        </>
     );
 }
 
