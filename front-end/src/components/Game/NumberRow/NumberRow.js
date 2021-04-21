@@ -12,6 +12,7 @@ const NumberRow = (props) => {
                 number={number} 
                 key={index}
                 row={props.row}
+                isSelected={props.selectedBoxIndex === index}
             />
         );
     });

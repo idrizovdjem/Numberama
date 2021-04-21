@@ -131,12 +131,18 @@ const GameBoard = (props) => {
 
     const rows = [];
     gameBoard.forEach((row, index) => {
+        let selectedBoxIndex = -1; 
+        if(selectedBox !== null && selectedBox.row === index) {
+            selectedBoxIndex = selectedBox.col;
+        }
+
         rows.push(
             <NumberRow
                 selectBox={selectBoxHandler}
                 row={index}
                 numbers={row}
                 key={index}
+                selectedBoxIndex={selectedBoxIndex}
             />
         );
     });

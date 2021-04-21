@@ -1,8 +1,10 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import ScoreContext from './context/scoreContext';
 
 import Navigation from './components/Navigation/Navigation';
 import Game from './components/Game/Game';
+import Login from './components/Login/Login';
 
 const App = () => {
 	const [score, setScore] = useState(0);
@@ -12,12 +14,19 @@ const App = () => {
 	}
 
 	return (
-		<Fragment>
+		<HashRouter>
 			<Navigation />
-			<ScoreContext.Provider value={{ score, updateScore }}>
-				<Game />
-			</ScoreContext.Provider>
-		</Fragment>
+			<Switch>
+				<Route path='/game' exact>
+					<ScoreContext.Provider value={{ score, updateScore }}>
+						<Game />
+					</ScoreContext.Provider>
+				</Route>
+				<Route path='/login' exact>
+					<Login />
+				</Route>
+			</Switch>
+		</HashRouter>
 	);
 }
 
