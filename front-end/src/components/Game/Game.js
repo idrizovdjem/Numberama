@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import classes from './Game.module.css';
 
 import scoreContext from '../../context/scoreContext';
 
@@ -10,7 +9,7 @@ const Game = () => {
     const context = useContext(scoreContext);
 
     return (
-        <div className={classes.Game}>
+        <div>
             <SideBar score={context.score} />
             <GameBoard updateScore={context.updateScore} />
         </div>

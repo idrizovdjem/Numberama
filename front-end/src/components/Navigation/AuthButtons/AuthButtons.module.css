@@ -1,0 +1,13 @@
+.NavButton {
+    float: right;
+    font-size: 4vh;
+    border: none;
+    background-color: transparent;
+    color: white;
+    margin: 0 1vh;
+    margin-top: 0.5vh;
+}
+
+.NavButton:hover {
+    cursor: pointer;
+}
