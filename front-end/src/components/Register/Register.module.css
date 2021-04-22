@@ -1,0 +1,11 @@
+.Form {
+    width: 40%;
+    margin: 10vh auto;   
+}
+
+@media screen and (max-width: 480px) {
+    .Form {
+        width: 90%;
+        margin-top: 2vh;
+    }
+}

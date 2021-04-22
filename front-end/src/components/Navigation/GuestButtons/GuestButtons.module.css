@@ -11,3 +11,8 @@
 .NavButton:hover {
     cursor: pointer;
 }
+
+.Link {
+    color: white;
+    text-decoration: none;
+}
