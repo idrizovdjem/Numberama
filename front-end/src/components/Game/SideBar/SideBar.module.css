@@ -2,7 +2,6 @@
     float: left;
     width: 25%;
     height: 94vh;
-    background-color: #B1D4E0;
     text-align: center;
 }
 
@@ -10,13 +9,4 @@
     margin: 2vh 0;
     padding: 0;
     font-size: 4vh;
-}
-
-.Submit {
-    font-size: 4vh;
-    background-color: transparent;
-    border: 2px solid black;
-    border-radius: 15px;
-    padding: 0.5vh 3vh; 
-    cursor: pointer;
 }
