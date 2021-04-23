@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import classes from './Login.module.css';
 
+import authValidator from '../../validators/authValidator';
+
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -15,15 +17,8 @@ const Login = () => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        const errors = [];
-        if(username.length < 4) {
-            errors.push('Username must be at least 4 symbols!');
-        }
-
-        if(password.length < 6) {
-            errors.push('Password must be at least 6 symbols!');
-        }
-
+        const errors = authValidator.validateLoginInforation(username, password);
+        console.log(errors);
         setAlerts(errors);
     }
 
