@@ -16,7 +16,7 @@ const GameButtons = (props) => {
                 Hint
             </button>
 
-            <button className={classes.GameButton}>
+            <button onClick={props.clearRows} className={classes.GameButton}>
                 <FontAwesomeIcon icon={faBroom} className={classes.Icon} />
                 Clear
             </button>

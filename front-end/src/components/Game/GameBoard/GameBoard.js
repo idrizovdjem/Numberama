@@ -129,6 +129,13 @@ const GameBoard = (props) => {
 
     }
 
+    const clearEmptyRows = () => {
+        setGameBoard(oldGameBoard => {
+            const rows = oldGameBoard.filter(row => row.some(num => num !== 0));
+            return rows;
+        });
+    }
+
     const rows = [];
     gameBoard.forEach((row, index) => {
         let selectedBoxIndex = -1; 
@@ -149,7 +156,7 @@ const GameBoard = (props) => {
 
     return (
         <>
-            <GameButtons addRow={addNewRowHandle} />
+            <GameButtons clearRows={clearEmptyRows} addRow={addNewRowHandle} />
             <div className={classes.GameBoard}>
                 {rows}
             </div>
