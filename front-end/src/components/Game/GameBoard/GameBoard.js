@@ -10,6 +10,8 @@ const GameBoard = (props) => {
     const initialRow = numberService.generateRow();
     const [gameBoard, setGameBoard] = useState([initialRow]);
     const [selectedBox, setSelectedBox] = useState(null);
+    const [firstHintBox, setFirstHintBox] = useState(null);
+    const [secondHintBox, setSecondHintBox] = useState(null);
 
     const addNewRowHandle = () => {
         // generate new row of numbers and add it to the game board
@@ -104,6 +106,8 @@ const GameBoard = (props) => {
                 });
 
                 // update score and set selected box to null
+                setFirstHintBox(null);
+                setSecondHintBox(null);
                 props.updateScore(firstValue + secondValue);
                 setSelectedBox(null);
                 return;
@@ -140,6 +144,8 @@ const GameBoard = (props) => {
                 });
 
                 // update score and set selected box to null
+                setFirstHintBox(null);
+                setSecondHintBox(null);
                 props.updateScore(firstValue + secondValue);
                 setSelectedBox(null);
                 return;
@@ -158,6 +164,95 @@ const GameBoard = (props) => {
         });
     }
 
+    const hintHandler = () => {
+        // check every digit if it has pair horizontaly and then verticaly
+
+        // check horizontaly
+        for(let i = 0; i < gameBoard.length; i++) {
+            for(let j = 0; j < gameBoard[i].length; j++) {
+                // get current check box value
+                const currentValue = gameBoard[i][j];
+                if(currentValue === 0) {
+                    continue;
+                }
+
+                let isPossible = true;
+                for(let k = i; k < gameBoard.length; k++) {
+                    if(!isPossible) {
+                        break;
+                    }
+
+                    // set the start for second current box column
+                    const start = k === i ? j + 1 : 0;
+                    for(let l = start; l < gameBoard[k].length; l++) {
+                        
+                        // get second current box value
+                        const secondCurrentValue = gameBoard[k][l];
+                        if(secondCurrentValue === 0) {
+                            continue;
+                        }
+
+                        // if the current box and second current box sum is 10
+                        // then we have a hint
+                        if(currentValue + secondCurrentValue === 10) {
+                            setFirstHintBox({ row: i, col: j });
+                            setSecondHintBox({ row: k, col: l });
+                            return;
+                        }
+
+                        // if both values are not equal break the loop
+                        if(secondCurrentValue !== currentValue) {
+                            isPossible = false;
+                            break;
+                        }
+
+                        // if both values are pair set the hint indexes and break
+                        if(currentValue === secondCurrentValue) {
+                            setFirstHintBox({ row: i, col: j });
+                            setSecondHintBox({ row: k, col: l });
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        // check verticaly
+        for(let i = 0; i < gameBoard.length; i++) {
+            for(let j = 0; j < gameBoard[i].length; j++) {
+                // get current box value
+                const currentValue = gameBoard[i][j];
+
+                for(let k = i + 1; k < gameBoard.length; k++) {
+                    // get second current value
+                    const secondCurrentValue = gameBoard[k][j];
+                    if(secondCurrentValue === 0) {
+                        continue;
+                    }
+
+                    // if current value and second current value sum is equal to 10, then we have a hint
+                    if(currentValue + secondCurrentValue === 10) {
+                        setFirstHintBox({ row: i, col: j });
+                        setSecondHintBox({ row: k, col: j });
+                        return;
+                    }
+
+                    // if we have a pair set the hint idexes and return
+                    if(currentValue === secondCurrentValue) {
+                        setFirstHintBox({ row: i, col: j });
+                        setSecondHintBox({ row: k, col: j });
+                        return;
+                    }
+
+                    // if both values are different break the loop
+                    if(currentValue !== secondCurrentValue) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     const rows = [];
     gameBoard.forEach((row, index) => {
         let selectedBoxIndex = -1; 
@@ -172,13 +267,18 @@ const GameBoard = (props) => {
                 numbers={row}
                 key={index}
                 selectedBoxIndex={selectedBoxIndex}
+                hintBoxes={[firstHintBox, secondHintBox]}
             />
         );
     });
 
     return (
         <Fragment>
-            <GameButtons clearRows={clearEmptyRows} addRow={addNewRowHandle} />
+            <GameButtons 
+                clearRows={clearEmptyRows} 
+                addRow={addNewRowHandle} 
+                hint={hintHandler}
+            />
             <div className={classes.GameBoard}>
                 {rows}
             </div>

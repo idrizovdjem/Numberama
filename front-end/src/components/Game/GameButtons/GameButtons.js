@@ -11,7 +11,7 @@ const GameButtons = (props) => {
                 Check
             </button>
 
-            <button className={classes.GameButton}>
+            <button className={classes.GameButton} onClick={props.hint}>
                 <FontAwesomeIcon icon={faLightbulb} className={classes.Icon} />
                 Hint
             </button>
