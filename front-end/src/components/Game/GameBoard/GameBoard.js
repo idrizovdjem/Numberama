@@ -13,6 +13,7 @@ const GameBoard = (props) => {
     const [firstHintBox, setFirstHintBox] = useState(null);
     const [secondHintBox, setSecondHintBox] = useState(null);
 
+
     const addNewRowHandle = () => {
         // generate new row of numbers and add it to the game board
         const newRow = numberService.generateRow();
@@ -121,7 +122,7 @@ const GameBoard = (props) => {
 
             let isPossibleVerticaly = true;
 
-             // check verticaly
+            // check verticaly
             firstRow = lowerRow;
             firstCol = lowerColumn;
             for (let i = firstRow + 1; i < higherRow; i++) {
@@ -158,6 +159,7 @@ const GameBoard = (props) => {
 
     const clearEmptyRows = () => {
         // filter the game board with only rows that are not empty(contain at least 1 digit different than 0)
+
         setGameBoard(oldGameBoard => {
             const rows = oldGameBoard.filter(row => row.some(num => num !== 0));
             return rows;
@@ -168,46 +170,46 @@ const GameBoard = (props) => {
         // check every digit if it has pair horizontaly and then verticaly
 
         // check horizontaly
-        for(let i = 0; i < gameBoard.length; i++) {
-            for(let j = 0; j < gameBoard[i].length; j++) {
+        for (let i = 0; i < gameBoard.length; i++) {
+            for (let j = 0; j < gameBoard[i].length; j++) {
                 // get current check box value
                 const currentValue = gameBoard[i][j];
-                if(currentValue === 0) {
+                if (currentValue === 0) {
                     continue;
                 }
 
                 let isPossible = true;
-                for(let k = i; k < gameBoard.length; k++) {
-                    if(!isPossible) {
+                for (let k = i; k < gameBoard.length; k++) {
+                    if (!isPossible) {
                         break;
                     }
 
                     // set the start for second current box column
                     const start = k === i ? j + 1 : 0;
-                    for(let l = start; l < gameBoard[k].length; l++) {
-                        
+                    for (let l = start; l < gameBoard[k].length; l++) {
+
                         // get second current box value
                         const secondCurrentValue = gameBoard[k][l];
-                        if(secondCurrentValue === 0) {
+                        if (secondCurrentValue === 0) {
                             continue;
                         }
 
                         // if the current box and second current box sum is 10
                         // then we have a hint
-                        if(currentValue + secondCurrentValue === 10) {
+                        if (currentValue + secondCurrentValue === 10) {
                             setFirstHintBox({ row: i, col: j });
                             setSecondHintBox({ row: k, col: l });
                             return;
                         }
 
                         // if both values are not equal break the loop
-                        if(secondCurrentValue !== currentValue) {
+                        if (secondCurrentValue !== currentValue) {
                             isPossible = false;
                             break;
                         }
 
                         // if both values are pair set the hint indexes and break
-                        if(currentValue === secondCurrentValue) {
+                        if (currentValue === secondCurrentValue) {
                             setFirstHintBox({ row: i, col: j });
                             setSecondHintBox({ row: k, col: l });
                             return;
@@ -218,34 +220,34 @@ const GameBoard = (props) => {
         }
 
         // check verticaly
-        for(let i = 0; i < gameBoard.length; i++) {
-            for(let j = 0; j < gameBoard[i].length; j++) {
+        for (let i = 0; i < gameBoard.length; i++) {
+            for (let j = 0; j < gameBoard[i].length; j++) {
                 // get current box value
                 const currentValue = gameBoard[i][j];
 
-                for(let k = i + 1; k < gameBoard.length; k++) {
+                for (let k = i + 1; k < gameBoard.length; k++) {
                     // get second current value
                     const secondCurrentValue = gameBoard[k][j];
-                    if(secondCurrentValue === 0) {
+                    if (secondCurrentValue === 0) {
                         continue;
                     }
 
                     // if current value and second current value sum is equal to 10, then we have a hint
-                    if(currentValue + secondCurrentValue === 10) {
+                    if (currentValue + secondCurrentValue === 10) {
                         setFirstHintBox({ row: i, col: j });
                         setSecondHintBox({ row: k, col: j });
                         return;
                     }
 
                     // if we have a pair set the hint idexes and return
-                    if(currentValue === secondCurrentValue) {
+                    if (currentValue === secondCurrentValue) {
                         setFirstHintBox({ row: i, col: j });
                         setSecondHintBox({ row: k, col: j });
                         return;
                     }
 
                     // if both values are different break the loop
-                    if(currentValue !== secondCurrentValue) {
+                    if (currentValue !== secondCurrentValue) {
                         break;
                     }
                 }
@@ -255,8 +257,8 @@ const GameBoard = (props) => {
 
     const rows = [];
     gameBoard.forEach((row, index) => {
-        let selectedBoxIndex = -1; 
-        if(selectedBox !== null && selectedBox.row === index) {
+        let selectedBoxIndex = -1;
+        if (selectedBox !== null && selectedBox.row === index) {
             selectedBoxIndex = selectedBox.col;
         }
 
@@ -274,9 +276,9 @@ const GameBoard = (props) => {
 
     return (
         <Fragment>
-            <GameButtons 
-                clearRows={clearEmptyRows} 
-                addRow={addNewRowHandle} 
+            <GameButtons
+                clearRows={clearEmptyRows}
+                addRow={addNewRowHandle}
                 hint={hintHandler}
             />
             <div className={classes.GameBoard}>

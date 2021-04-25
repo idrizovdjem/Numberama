@@ -15,17 +15,13 @@ const App = () => {
 		setScore(oldScore => oldScore + points);
 	}
 
-	const clearRows = () => {
-		console.log('are we');
-	}
-
 	return (
 		<HashRouter>
 			<Navigation />
 			<Switch>
 				<Route path='/game' exact>
-					<ScoreContext.Provider value={{ score, updateScore, clearRows }}>
-						<Game />
+					<ScoreContext.Provider value={score}>
+						<Game updateScore={updateScore} />
 					</ScoreContext.Provider>
 				</Route>
 				<Route path='/login' exact component={Login} />
