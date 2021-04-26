@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="TokenAuthService.cs~RF102abe8.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NumberamaWebApi.Data\NumberamaWebApi.Data.csproj" />
+    <ProjectReference Include="..\NumberamaWebApi.Models\NumberamaWebApi.Models.csproj" />
+  </ItemGroup>
+
+</Project>
