@@ -26,6 +26,7 @@ namespace NumberamaWebApi.Services
             var user = new ApplicationUser()
             {
                 Email = input.Email,
+                Username = input.Username,
                 Password = hashedPassword
             };
 
@@ -47,6 +48,12 @@ namespace NumberamaWebApi.Services
         {
             return this.dbContext.Users
                 .All(u => u.Email != email);
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            return this.dbContext.Users
+                .All(u => u.Username != username);
         }
     }
 }

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="UsersValidator.cs~RF54e3b56.TMP" />
+    <None Remove="ValidationConstants.cs~RF554e034.TMP" />
+    <None Remove="Validators\EmailValidator.cs~RF55a20ce.TMP" />
+    <None Remove="Validators\Validator.cs~RF55c8d1b.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NumberamaWebApi.Models\NumberamaWebApi.Models.csproj" />
+  </ItemGroup>
+
+</Project>

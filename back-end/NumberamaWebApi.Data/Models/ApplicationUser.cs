@@ -17,6 +17,10 @@ namespace NumberamaWebApi.Data.Models
         public string Email { get; set; }
 
         [Required]
+        [MaxLength(200)]
+        public string Username { get; set; }
+
+        [Required]
         public string Password { get; set; }
     }
 }
