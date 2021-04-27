@@ -7,6 +7,6 @@ namespace NumberamaWebApi.Services.Contracts
 {
     public interface ITokenAuthService
     {
-        Task<TokenResult> GenerateTokens(ApplicationUser user);
+        Task<TokenResult> GenerateTokensAsync(ApplicationUser user);
     }
 }

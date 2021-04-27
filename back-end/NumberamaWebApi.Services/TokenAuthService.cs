@@ -81,7 +81,7 @@ namespace NumberamaWebApi.Services
             }
         }
 
-        public async Task<TokenResult> GenerateTokens(ApplicationUser user)
+        public async Task<TokenResult> GenerateTokensAsync(ApplicationUser user)
         {
             var result = new TokenResult();
 

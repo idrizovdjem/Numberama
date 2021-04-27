@@ -36,6 +36,8 @@ namespace NumberamaWebApi
             });
 
             services.AddTransient<ITokenAuthService, TokenAuthService>();
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IUtilitiesService, UtilitiesService>();
 
             var jwtTokenConfig = Configuration.GetSection("jwt").Get<TokenConfig>();
             services.AddSingleton(jwtTokenConfig);
