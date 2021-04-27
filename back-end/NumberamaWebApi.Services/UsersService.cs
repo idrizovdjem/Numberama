@@ -35,6 +35,14 @@ namespace NumberamaWebApi.Services
             return user;
         }
 
+        public ApplicationUser Login(UserLoginInputModel input)
+        {
+            var hashedPassword = this.utilitiesService.HashPassword(input.Password);
+
+            return this.dbContext.Users
+                .FirstOrDefault(u => u.Email == input.Email && u.Password == u.Password);
+        }
+
         public bool IsEmailAvailable(string email)
         {
             return this.dbContext.Users

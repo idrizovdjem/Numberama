@@ -40,5 +40,24 @@ namespace NumberamaWebApi.Controllers
 
             return Json(tokens);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Login(UserLoginInputModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(input);
+            }
+
+            var user = this.usersService.Login(input);
+            if(user == null)
+            {
+                return BadRequest();
+            }
+
+            var tokens = await this.tokenAuthService.GenerateTokensAsync(user);
+            return Json(tokens);
+        }
     }
 }

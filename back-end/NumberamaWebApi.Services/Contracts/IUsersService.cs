@@ -9,6 +9,8 @@ namespace NumberamaWebApi.Services.Contracts
     {
         bool IsEmailAvailable(string email);
 
+        ApplicationUser Login(UserLoginInputModel input);
+
         Task<ApplicationUser> RegisterAsync(UserRegisterInputModel input);
     }
 }
