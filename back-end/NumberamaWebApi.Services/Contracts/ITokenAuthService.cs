@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-
-using NumberamaWebApi.Data.Models;
+﻿using NumberamaWebApi.Data.Models;
 using NumberamaWebApi.Models.Token;
 
 namespace NumberamaWebApi.Services.Contracts
 {
     public interface ITokenAuthService
     {
-        Task<TokenResult> GenerateTokensAsync(ApplicationUser user);
+        TokenResult GenerateTokens(ApplicationUser user);
     }
 }

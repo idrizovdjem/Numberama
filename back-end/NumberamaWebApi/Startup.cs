@@ -30,14 +30,18 @@ namespace NumberamaWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                   .AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader());
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-
-            services.AddTransient<ITokenAuthService, TokenAuthService>();
-            services.AddTransient<IUsersService, UsersService>();
-            services.AddTransient<IUtilitiesService, UtilitiesService>();
 
             var jwtTokenConfig = Configuration.GetSection("jwt").Get<TokenConfig>();
             services.AddSingleton(jwtTokenConfig);
@@ -64,6 +68,10 @@ namespace NumberamaWebApi
                 };
             });
 
+            services.AddTransient<ITokenAuthService, TokenAuthService>();
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IUtilitiesService, UtilitiesService>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -82,6 +90,8 @@ namespace NumberamaWebApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
             app.UseAuthentication();

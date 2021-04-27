@@ -21,7 +21,5 @@ namespace NumberamaWebApi.Data
         }
 
         public DbSet<ApplicationUser> Users { get; set; }
-
-        public DbSet<AccessToken> AccessTokens { get; set; }
     }
 }

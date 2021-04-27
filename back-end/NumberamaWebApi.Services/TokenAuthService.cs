@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -50,38 +49,7 @@ namespace NumberamaWebApi.Services
             return Convert.ToBase64String(randomNumber);
         }
 
-        public ClaimsPrincipal GetPrincipalFromToken(string token)
-        {
-            JwtSecurityTokenHandler tokenValidator = new JwtSecurityTokenHandler();
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfig.Secret));
-
-            var parameters = new TokenValidationParameters
-            {
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = key,
-                ValidateLifetime = false
-            };
-
-            try
-            {
-                var principal = tokenValidator.ValidateToken(token, parameters, out var securityToken);
-
-                if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return null;
-                }
-
-                return principal;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public async Task<TokenResult> GenerateTokensAsync(ApplicationUser user)
+        public TokenResult GenerateTokens(ApplicationUser user)
         {
             var result = new TokenResult();
 
@@ -90,16 +58,6 @@ namespace NumberamaWebApi.Services
                 var claims = BuildClaims(user);
                 result.AccessToken = BuildToken(claims);
                 result.RefreshToken = BuildRefreshToken();
-
-                dbContext.AccessTokens.Add(new AccessToken
-                {
-                    UserId = user.Id,
-                    Token = result.RefreshToken,
-                    IssuedAt = DateTime.Now,
-                    ExpiresAt = DateTime.Now.AddMinutes(tokenConfig.RefreshTokenExpiration)
-                });
-
-                await dbContext.SaveChangesAsync();
             };
 
             return result;
