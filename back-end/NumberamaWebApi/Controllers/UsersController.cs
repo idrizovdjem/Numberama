@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
-using NumberamaWebApi.Models.Response;
+
 using NumberamaWebApi.Models.User;
+using NumberamaWebApi.Models.Response;
 using NumberamaWebApi.Services.Contracts;
-using NumberamaWebApi.Validators.Validators;
 
 namespace NumberamaWebApi.Controllers
 {
@@ -25,12 +25,14 @@ namespace NumberamaWebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(UserRegisterInputModel input)
         {
-            var validationResult = UsersValidator.ValidateRegister(input);
-            if (validationResult.IsValid == false)
+            if(!ModelState.IsValid)
             {
                 return Json(new BadResponseModel()
                 {
-                    ErrorMessages = validationResult.ErrorMessages
+                    ErrorMessages = new List<string>()
+                    {
+                        "Invalid register information"
+                    }
                 });
             }
 
@@ -73,17 +75,19 @@ namespace NumberamaWebApi.Controllers
         [HttpPost]
         public IActionResult Login(UserLoginInputModel input)
         {
-            var validationResult = UsersValidator.ValidateLogin(input);
-            if (validationResult.IsValid == false)
+            if(!ModelState.IsValid)
             {
                 return Json(new BadResponseModel()
                 {
-                    ErrorMessages = validationResult.ErrorMessages
+                    ErrorMessages = new List<string>()
+                    {
+                        "Invalid login information"
+                    }
                 });
             }
 
             var user = this.usersService.Login(input);
-            if(user == null)
+            if (user == null)
             {
                 return Json(new BadResponseModel()
                 {

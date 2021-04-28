@@ -4,8 +4,12 @@ namespace NumberamaWebApi.Models.User
 {
     public class UserLoginInputModel
     {
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
+        [Required]
+        [MinLength(5), MaxLength(200)]
         public string Password { get; set; }
     }
 }

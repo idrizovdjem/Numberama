@@ -15,6 +15,7 @@ using NumberamaWebApi.Data;
 using NumberamaWebApi.Services;
 using NumberamaWebApi.Models.Token;
 using NumberamaWebApi.Services.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NumberamaWebApi
 {
@@ -30,6 +31,9 @@ namespace NumberamaWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ApiBehaviorOptions>(opt => { opt.SuppressModelStateInvalidFilter = true; });
+
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
