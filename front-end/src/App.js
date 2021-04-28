@@ -17,17 +17,16 @@ const App = () => {
 
 	return (
 		<HashRouter>
-			<Navigation />
-			<Switch>
-				<Route path='/game' exact>
-					<ScoreContext.Provider value={score}>
-						<Game updateScore={updateScore} />
-					</ScoreContext.Provider>
-				</Route>
-				<Route path='/login' exact component={Login} />
-				<Route path='/register' exact component={Register} />
-			</Switch>
-			<Footer />
+			<ScoreContext.Provider value={score}>
+				<Navigation />
+				<Switch>
+					<Route path='/login' exact component={Login} />
+					<Route path='/register' exact component={Register} />
+					<Route path='/game' exact render={() => <Game updateScore={updateScore} />} />							
+					<Route path='/' render={() => <Game updateScore={updateScore} />} />
+				</Switch>
+				<Footer />
+			</ScoreContext.Provider>
 		</HashRouter>
 	);
 }

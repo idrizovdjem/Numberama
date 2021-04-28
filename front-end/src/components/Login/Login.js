@@ -2,6 +2,7 @@ import { useState } from 'react';
 import classes from './Login.module.css';
 
 import authValidator from '../../validators/authValidator';
+import authService from '../../services/authService';
 
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -10,16 +11,22 @@ import Button from '@material-ui/core/Button';
 import AlertMessage from '../Shared/AlertMessage/AlertMessage';
 
 const Login = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alerts, setAlerts] = useState([]);
 
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
 
-        const errors = authValidator.validateLoginInforation(username, password);
-        console.log(errors);
+        const errors = authValidator.validateLoginInforation(email, password);
         setAlerts(errors);
+
+        if(errors.length !== 0) {
+            return;
+        }
+
+        const loginResponse = await authService.login(email, password);
+        console.log(loginResponse);
     }
 
     return (
@@ -33,8 +40,9 @@ const Login = () => {
             }
 
             <TextField
-                onChange={(event) => setUsername(event.target.value)}
-                label="Username"
+                onChange={(event) => setEmail(event.target.value)}
+                label="Email"
+                type='email'
                 variant="outlined"
                 fullWidth
                 size="small"

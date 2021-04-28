@@ -1,8 +1,8 @@
-function validateLoginInforation(username, password) {
+function validateLoginInforation(email, password) {
     const errors = [];
 
-    if(username.length < 4) {
-        errors.push('Username must be at least 4 symbols!');
+    if(email.length < 4) {
+        errors.push('Email must be at least 4 symbols!');
     }
 
     if(password.length < 6) {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import classes from './Register.module.css';
 
 import authValidator from '../../validators/authValidator';
+import authService from '../../services/authService';
 
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -16,11 +17,23 @@ const Register = () => {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [alerts, setAlerts] = useState([]);
 
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
 
         const errors = authValidator.validateRegisterInformation(email, username, password, repeatPassword);
         setAlerts(errors);
+
+        if(errors.length !== 0) {
+            return;
+        }
+
+        const registerResponse = await authService.register(email, username, password);
+        if(!registerResponse.successfull) {
+            setAlerts([...registerResponse.errorMessages]);
+            return;
+        }
+
+        console.log(registerResponse);
     }
 
     return (
