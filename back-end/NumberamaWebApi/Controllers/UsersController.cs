@@ -14,25 +14,24 @@ namespace NumberamaWebApi.Controllers
     public class UsersController : Controller
     {
         private readonly IUsersService usersService;
+        private readonly IUtilitiesService utilitiesService;
         private readonly ITokenAuthService tokenAuthService;
 
-        public UsersController(IUsersService usersService, ITokenAuthService tokenAuthService)
+        public UsersController(IUsersService usersService, ITokenAuthService tokenAuthService, IUtilitiesService utilitiesService)
         {
             this.usersService = usersService;
             this.tokenAuthService = tokenAuthService;
+            this.utilitiesService = utilitiesService;
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(UserRegisterInputModel input)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Json(new BadResponseModel()
                 {
-                    ErrorMessages = new List<string>()
-                    {
-                        "Invalid register information"
-                    }
+                    ErrorMessages = this.utilitiesService.GetModelStateErorrs(ModelState)
                 });
             }
 
@@ -79,10 +78,7 @@ namespace NumberamaWebApi.Controllers
             {
                 return Json(new BadResponseModel()
                 {
-                    ErrorMessages = new List<string>()
-                    {
-                        "Invalid login information"
-                    }
+                    ErrorMessages = this.utilitiesService.GetModelStateErorrs(ModelState)
                 });
             }
 
