@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace NumberamaWebApi.Data.Models
@@ -8,6 +9,7 @@ namespace NumberamaWebApi.Data.Models
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Results = new HashSet<GameResult>();
         }
 
         [Key]
@@ -22,5 +24,7 @@ namespace NumberamaWebApi.Data.Models
 
         [Required]
         public string Password { get; set; }
+
+        public virtual ICollection<GameResult> Results { get; set; }
     }
 }
