@@ -29,7 +29,7 @@ namespace NumberamaWebApi.Services
                     Username = gr.User.Username,
                     Score = gr.Score,
                     SubmitedAt = gr.SubmitedAt
-                })
+                }) 
                 .ToList();
         }
 
