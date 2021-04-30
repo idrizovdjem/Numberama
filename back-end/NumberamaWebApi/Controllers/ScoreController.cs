@@ -42,10 +42,17 @@ namespace NumberamaWebApi.Controllers
             {
                 Data = new
                 {
-                    SubmitedAt = result.SubmitedAt,
-                    Score = result.Score
+                    result.SubmitedAt,
+                    result.Score
                 }
             });
+        }
+
+        [HttpGet]
+        public IActionResult GetTopTen()
+        {
+            var topResults = this.scoreService.GetTopTen();
+            return Json(topResults);
         }
     }
 }
