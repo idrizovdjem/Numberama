@@ -19,6 +19,8 @@ namespace NumberamaWebApi.Data
 
         public DbSet<GameResult> GameResults { get; set; }
 
+        public DbSet<AccessToken> AccessTokens { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
