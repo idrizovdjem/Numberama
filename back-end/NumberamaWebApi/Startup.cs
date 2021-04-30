@@ -75,6 +75,7 @@ namespace NumberamaWebApi
             services.AddTransient<ITokenAuthService, TokenAuthService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IUtilitiesService, UtilitiesService>();
+            services.AddTransient<IScoreService, ScoreService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
