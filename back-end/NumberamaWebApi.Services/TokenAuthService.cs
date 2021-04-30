@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -49,18 +50,30 @@ namespace NumberamaWebApi.Services
             return Convert.ToBase64String(randomNumber);
         }
 
-        public TokenResult GenerateTokens(ApplicationUser user)
+        public async Task<TokenResult> GenerateTokensAsync(ApplicationUser user)
         {
-            var result = new TokenResult();
-
-            if (user != null)
+            if (user == null)
             {
-                var claims = BuildClaims(user);
-                result.AccessToken = BuildToken(claims);
-                result.RefreshToken = BuildRefreshToken();
+                return null;
+            }
+
+            var claims = BuildClaims(user);
+            var accessToken = new AccessToken()
+            {
+                Token = BuildToken(claims),
+                RefreshToken = BuildRefreshToken(),
+                User = user,
+                RefreshExpirationDate = DateTime.UtcNow.AddMinutes(60)
             };
 
-            return result;
+            await this.dbContext.AccessTokens.AddAsync(accessToken);
+            await this.dbContext.SaveChangesAsync();
+
+            return new TokenResult()
+            {
+                AccessToken = accessToken.Token,
+                RefreshToken = accessToken.RefreshToken
+            };
         }
 
         private static Claim[] BuildClaims(ApplicationUser user)

@@ -62,7 +62,7 @@ namespace NumberamaWebApi.Controllers
             }
 
             var user = await this.usersService.RegisterAsync(input);
-            var tokens = this.tokenAuthService.GenerateTokens(user);
+            var tokens = await this.tokenAuthService.GenerateTokensAsync(user);
 
             return Json(new OkResponseModel()
             {
@@ -72,7 +72,7 @@ namespace NumberamaWebApi.Controllers
 
 
         [HttpPost]
-        public IActionResult Login(UserLoginInputModel input)
+        public async Task<IActionResult> Login(UserLoginInputModel input)
         {
             if(!ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace NumberamaWebApi.Controllers
                 });
             }
 
-            var tokens = this.tokenAuthService.GenerateTokens(user);
+            var tokens = await this.tokenAuthService.GenerateTokensAsync(user);
             return Json(new OkResponseModel()
             {
                 Data = tokens
