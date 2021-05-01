@@ -72,7 +72,7 @@ namespace NumberamaWebApi
                 };
             });
 
-            services.AddTransient<ITokenAuthService, TokenAuthService>();
+            services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IUtilitiesService, UtilitiesService>();
             services.AddTransient<IScoreService, ScoreService>();

@@ -11,6 +11,8 @@ namespace NumberamaWebApi.Services.Contracts
 
         bool IsUsernameAvailable(string username);
 
+        ApplicationUser GetById(string userId);
+
         ApplicationUser Login(UserLoginInputModel input);
 
         Task<ApplicationUser> RegisterAsync(UserRegisterInputModel input);

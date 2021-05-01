@@ -55,5 +55,11 @@ namespace NumberamaWebApi.Services
             return this.dbContext.Users
                 .All(u => u.Username != username);
         }
+
+        public ApplicationUser GetById(string userId)
+        {
+            return this.dbContext.Users
+                .FirstOrDefault(u => u.Id == userId);
+        }
     }
 }

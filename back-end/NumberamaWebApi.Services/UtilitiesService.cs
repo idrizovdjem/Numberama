@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 using NumberamaWebApi.Services.Contracts;
+using Microsoft.AspNetCore.Http;
 
 namespace NumberamaWebApi.Services
 {
@@ -31,6 +32,27 @@ namespace NumberamaWebApi.Services
                 }
             }
             return modelErrors;
+        }
+
+        public string GetAccessTokenHeader(HttpContext httpContext)
+        {
+            // check if there is authorization header
+            if(httpContext.Request.Headers.ContainsKey("authorization") == false)
+            {
+                return null;
+            }
+
+            // get the header value
+            var rawToken = httpContext.Request.Headers["authorization"].ToString();
+
+            if(rawToken == "Bearer")
+            {
+                return null;
+            }
+
+            // remove "Bearer " from the token
+            var accessToken = rawToken.Substring(7);
+            return accessToken;
         }
     }
 }

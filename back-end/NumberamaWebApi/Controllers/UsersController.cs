@@ -15,9 +15,9 @@ namespace NumberamaWebApi.Controllers
     {
         private readonly IUsersService usersService;
         private readonly IUtilitiesService utilitiesService;
-        private readonly ITokenAuthService tokenAuthService;
+        private readonly ITokenService tokenAuthService;
 
-        public UsersController(IUsersService usersService, ITokenAuthService tokenAuthService, IUtilitiesService utilitiesService)
+        public UsersController(IUsersService usersService, ITokenService tokenAuthService, IUtilitiesService utilitiesService)
         {
             this.usersService = usersService;
             this.tokenAuthService = tokenAuthService;

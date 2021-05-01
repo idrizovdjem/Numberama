@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
@@ -14,12 +15,12 @@ using NumberamaWebApi.Services.Contracts;
 
 namespace NumberamaWebApi.Services
 {
-    public class TokenAuthService : ITokenAuthService
+    public class TokenService : ITokenService
     {
         private readonly TokenConfig tokenConfig;
         private readonly ApplicationDbContext dbContext;
 
-        public TokenAuthService(TokenConfig jwtTokenConfig, ApplicationDbContext dbContext)
+        public TokenService(TokenConfig jwtTokenConfig, ApplicationDbContext dbContext)
         {
             this.tokenConfig = jwtTokenConfig;
             this.dbContext = dbContext;
@@ -85,6 +86,12 @@ namespace NumberamaWebApi.Services
             };
 
             return claims;
+        }
+
+        public AccessToken GetAccessToken(string token, string refreshToken)
+        {
+            return this.dbContext.AccessTokens
+                .FirstOrDefault(at => at.Token == token && at.RefreshToken == refreshToken);
         }
     }
 }
