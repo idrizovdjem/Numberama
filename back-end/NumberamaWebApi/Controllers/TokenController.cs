@@ -35,7 +35,7 @@ namespace NumberamaWebApi.Controllers
                 {
                     ErrorMessages = new List<string>()
                     {
-                        "Missing access tokne header"
+                        "Missing access token header"
                     }
                 });
             }
