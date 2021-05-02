@@ -41,7 +41,7 @@ namespace NumberamaWebApi.Services
             var hashedPassword = this.utilitiesService.HashPassword(input.Password);
 
             return this.dbContext.Users
-                .FirstOrDefault(u => u.Email == input.Email && u.Password == u.Password);
+                .FirstOrDefault(u => u.Email == input.Email && u.Password == hashedPassword);
         }
 
         public bool IsEmailAvailable(string email)
