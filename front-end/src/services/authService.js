@@ -21,7 +21,7 @@ async function register(email, username, password) {
 }
 
 function isUserAuthenticated() {
-    const authToken = localStorage.getItem('authToken');
+    const authToken = localStorage.getItem('accessToken');
     return Boolean(authToken);
 }
 
@@ -30,9 +30,16 @@ function persistUser(accessToken, refreshToken) {
     sessionStorage.setItem('refreshToken', refreshToken);
 }
 
+async function refreshSession() {
+    const refreshToken = sessionStorage.getItem('refreshToken');
+    const response = await axios.post('/token/refresh', { refreshToken });
+    return response.data;
+}
+
 const authService = {
     login,
     register,
+    refreshSession,
     isUserAuthenticated
 };
 

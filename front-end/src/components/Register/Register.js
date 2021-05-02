@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import classes from './Register.module.css';
 
 import authValidator from '../../validators/authValidator';
@@ -10,7 +11,7 @@ import Button from '@material-ui/core/Button';
 
 import AlertMessage from '../Shared/AlertMessage/AlertMessage';
 
-const Register = () => {
+const Register = (props) => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -33,7 +34,12 @@ const Register = () => {
             return;
         }
 
-        console.log(registerResponse);
+        if(registerResponse.successfull === false) {
+            setAlerts(registerResponse.errorMessages);
+            return;
+        }
+
+        props.history.push('/game');
     }
 
     return (

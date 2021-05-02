@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 
 import AlertMessage from '../Shared/AlertMessage/AlertMessage';
 
-const Login = () => {
+const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alerts, setAlerts] = useState([]);
@@ -26,7 +26,13 @@ const Login = () => {
         }
 
         const loginResponse = await authService.login(email, password);
-        console.log(loginResponse);
+
+        if(loginResponse.successfull === false) {
+            setAlerts(loginResponse.errorMessages);
+            return;
+        }
+
+        props.history.push('/game');
     }
 
     return (
