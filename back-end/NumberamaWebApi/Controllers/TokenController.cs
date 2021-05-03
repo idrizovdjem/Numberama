@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,48 +27,36 @@ namespace NumberamaWebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Refresh(RefreshTokenInputModel input)
         {
+            var response = new ResponseModel();
+
             var headerToken = this.utilitiesService.GetAccessTokenHeader(HttpContext);
             if(headerToken == null)
             {
-                return Json(new UnauthorizedResponseModel()
-                {
-                    ErrorMessages = new List<string>()
-                    {
-                        "Missing access token header" 
-                    }
-                });
+                response.AddErrorMessage("Missing access token header");
+                response.StatusCode = 400;
+                return Json(response);
             }
 
             var accessToken = this.tokenService.GetAccessToken(headerToken, input.RefreshToken);
             if(accessToken == null)
             {
-                return Json(new UnauthorizedResponseModel()
-                {
-                    ErrorMessages = new List<string>()
-                    {
-                        "Invalid refresh token"
-                    }
-                });
+                response.AddErrorMessage("Invalid refresh token");
+                response.StatusCode = 400;
+                return Json(response);
             }
 
             if(accessToken.RefreshExpirationDate < DateTime.UtcNow)
             {
-                return Json(new UnauthorizedResponseModel()
-                {
-                    ErrorMessages = new List<string>()
-                    {
-                        "Refresh token expired"
-                    }
-                });
+                response.AddErrorMessage("Refresh token expired");
+                response.StatusCode = 400;
+                return Json(response);
             }
             var user = this.usersService.GetById(accessToken.UserId);
 
             var tokens = await this.tokenService.GenerateTokensAsync(user);
 
-            return Json(new OkResponseModel()
-            {
-                Data = tokens
-            });
+            response.Data = tokens;
+            return Json(response);
         }
     }
 }

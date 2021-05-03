@@ -2,12 +2,12 @@
 
 namespace NumberamaWebApi.Models.Response
 {
-    public abstract class ResponseModel
+    public  class ResponseModel
     {
-        public ResponseModel(bool successfull, int statusCode)
+        public ResponseModel()
         {
-            this.Successfull = successfull;
-            this.StatusCode = statusCode;
+            this.Successfull = true;
+            this.StatusCode = 200;
             this.ErrorMessages = new List<string>();
         }
 
@@ -18,5 +18,11 @@ namespace NumberamaWebApi.Models.Response
         public List<string> ErrorMessages { get; set; }
 
         public object Data { get; set; }
+
+        public void AddErrorMessage(string message)
+        {
+            this.Successfull = false;
+            this.ErrorMessages.Add(message);
+        }
     }
 }

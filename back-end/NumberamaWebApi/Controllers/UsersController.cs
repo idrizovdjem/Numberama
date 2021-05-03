@@ -27,78 +27,70 @@ namespace NumberamaWebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(UserRegisterInputModel input)
         {
+            var response = new ResponseModel();
             if (!ModelState.IsValid)
             {
-                return Json(new BadResponseModel()
+                var errorMessages = this.utilitiesService.GetModelStateErorrs(ModelState);
+                foreach(var message in errorMessages)
                 {
-                    ErrorMessages = this.utilitiesService.GetModelStateErorrs(ModelState)
-                });
+                    response.AddErrorMessage(message);
+                }
+                response.StatusCode = 400;
+                return Json(response);
             }
 
             var isEmailAvailable = this.usersService.IsEmailAvailable(input.Email);
 
             if(isEmailAvailable == false)
             {
-                return Json(new BadResponseModel()
-                {
-                    ErrorMessages = new List<string>()
-                    {
-                        "This email is already taken"
-                    }
-                });
+                response.AddErrorMessage("This email is already taken");
+                response.StatusCode = 400;
+                return Json(response);
             }
 
             var isUsernameAvailable = this.usersService.IsUsernameAvailable(input.Username);
 
             if (isUsernameAvailable == false)
             {
-                return Json(new BadResponseModel()
-                {
-                    ErrorMessages = new List<string>()
-                    {
-                        "This username is already taken"
-                    }
-                });
+                response.AddErrorMessage("This username is already taken");
+                response.StatusCode = 400;
+                return Json(response);
             }
 
             var user = await this.usersService.RegisterAsync(input);
             var tokens = await this.tokenAuthService.GenerateTokensAsync(user);
 
-            return Json(new OkResponseModel()
-            {
-                Data = tokens
-            });
+            response.Data = tokens;
+            return Json(response);
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Login(UserLoginInputModel input)
         {
+            var response = new ResponseModel();
             if(!ModelState.IsValid)
             {
-                return Json(new BadResponseModel()
+                var errorMessage = this.utilitiesService.GetModelStateErorrs(ModelState);
+                foreach(var message in errorMessage)
                 {
-                    ErrorMessages = this.utilitiesService.GetModelStateErorrs(ModelState)
-                });
+                    response.AddErrorMessage(message);
+                }
+                response.StatusCode = 400;
+                return Json(response);
             }
 
             var user = this.usersService.Login(input);
             if (user == null)
             {
-                return Json(new BadResponseModel()
-                {
-                    ErrorMessages = new List<string>()
-                    {
-                        "Invalid login information"
-                    }
-                });
+                response.AddErrorMessage("Invalid login information");
+                response.StatusCode = 401;
+                return Json(response);
             }
 
             var tokens = await this.tokenAuthService.GenerateTokensAsync(user);
-            return Json(new OkResponseModel()
-            {
-                Data = tokens
-            });
+            response.Data = tokens;
+            return Json(response);
         }
     }
 }

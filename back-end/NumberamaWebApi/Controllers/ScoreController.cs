@@ -27,32 +27,41 @@ namespace NumberamaWebApi.Controllers
         [Authorize]
         public async Task<IActionResult> Submit(SubmitScoreInputModel input)
         {
+            var response = new ResponseModel();
+
             if(!ModelState.IsValid)
             {
-                return Json(new BadResponseModel()
+                var errorMessages = this.utilitiesService.GetModelStateErorrs(ModelState);
+
+                foreach(var message in errorMessages)
                 {
-                    ErrorMessages = this.utilitiesService.GetModelStateErorrs(ModelState)
-                });
+                    response.AddErrorMessage(message);
+                }
+
+                response.StatusCode = 400;
+                return Json(response);
             }
 
             var userId = User.FindFirst("id").Value;
             var result = await this.scoreService.SubmitAsync(userId, input.Points);
 
-            return Json(new CreatedResponseModel()
+            response.StatusCode = 201;
+            response.Data = new
             {
-                Data = new
-                {
-                    result.SubmitedAt,
-                    result.Score
-                }
-            });
+                result.SubmitedAt,
+                result.Score
+            };
+
+            return Json(response);
         }
 
         [HttpGet]
         public IActionResult GetTopTen()
         {
+            var response = new ResponseModel();
             var topResults = this.scoreService.GetTopTen();
-            return Json(topResults);
+            response.Data = topResults;
+            return Json(response);
         }
     }
 }
