@@ -32,6 +32,7 @@ const Login = (props) => {
             return;
         }
 
+        props.changeAuthenticationState(true);
         props.history.push('/game');
     }
 

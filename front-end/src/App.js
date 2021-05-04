@@ -12,6 +12,7 @@ import Footer from './components/Footer/Footer';
 
 const App = () => {
 	const [score, setScore] = useState(0);
+	const [isUserAuthenticated, setIsUserAuthenticated] = useState(authService.isUserAuthenticated());
 
 	const updateScore = (points) => {
 		setScore(oldScore => oldScore + points);
@@ -19,7 +20,7 @@ const App = () => {
 
 	const requireAuthentication = (Component, props) => {
 		if(authService.isUserAuthenticated() === false) {
-			return <Login {...props} />
+			return <Login {...props} changeAuthenticationState={changeAuthenticationState} />
 		}
 
 		return <Component {...props} />;
@@ -33,13 +34,17 @@ const App = () => {
 		return <Component {...props} />;
 	}
 
+	const changeAuthenticationState = (authState) => {
+		setIsUserAuthenticated(authState);
+	}
+
 	return (
 		<HashRouter>
 			<ScoreContext.Provider value={score}>
-				<Navigation />
+				<Navigation isUserAuthenticated={isUserAuthenticated} changeAuthenticationState={changeAuthenticationState} />
 				<Switch>
-					<Route path='/login' exact render={(props) => requireAnonymous(Login, props)} />
-					<Route path='/register' exact render={(props) => requireAnonymous(Register, props)} />
+					<Route path='/login' exact render={(props) => requireAnonymous(Login, {...props, changeAuthenticationState})} />
+					<Route path='/register' exact render={(props) => requireAnonymous(Register, {...props, changeAuthenticationState })} />
 					<Route path='/game' exact render={(props) => requireAuthentication(Game, {...props, updateScore })} />
 					<Route path='/' render={(props) => requireAuthentication(Game, {...props, updateScore})} />
 				</Switch>

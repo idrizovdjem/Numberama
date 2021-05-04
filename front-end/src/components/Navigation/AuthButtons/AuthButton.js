@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 const AuthButtons = (props) => {
     const logout = () => {
         authService.logout();
+        props.changeAuthenticationState(false);
         props.history.push('/login');
     }
 

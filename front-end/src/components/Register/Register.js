@@ -29,8 +29,9 @@ const Register = (props) => {
         }
 
         const registerResponse = await authService.register(email, username, password);
+
         if(!registerResponse.successfull) {
-            setAlerts([...registerResponse.errorMessages]);
+            setAlerts(registerResponse.errorMessages);
             return;
         }
 
@@ -39,6 +40,7 @@ const Register = (props) => {
             return;
         }
 
+        props.changeAuthenticationState(true);
         props.history.push('/game');
     }
 

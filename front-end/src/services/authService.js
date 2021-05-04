@@ -8,7 +8,7 @@ async function login(email, password) {
         persistUser(accessToken, refreshToken);
     }
 
-    return response.data;
+    return response;
 }
 
 async function register(email, username, password) {
@@ -19,7 +19,7 @@ async function register(email, username, password) {
         persistUser(accessToken, refreshToken);
     }
 
-    return response.data;
+    return response;
 }
 
 function isUserAuthenticated() {
