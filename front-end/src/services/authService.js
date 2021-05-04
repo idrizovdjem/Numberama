@@ -1,9 +1,10 @@
 import axios from '../axios';
 
 async function login(email, password) {
-    const response = await axios.post('/users/login', { email, password });
+    const rawResponse = await axios.post('/users/login', { email, password });
+    const response = rawResponse.data; 
     if(response.successfull) {
-        const [accessToken, refreshToken] = response.data;
+        const { accessToken, refreshToken } = response.data;
         persistUser(accessToken, refreshToken);
     }
 
@@ -11,9 +12,10 @@ async function login(email, password) {
 }
 
 async function register(email, username, password) {
-    const response = await axios.post('/users/register', { email, username, password });
+    const rawResponse = await axios.post('/users/register', { email, username, password });
+    const response = rawResponse.data;
     if(response.successfull) {
-        const [accessToken, refreshToken] = response.data;
+        const { accessToken, refreshToken } = response.data;
         persistUser(accessToken, refreshToken);
     }
 
@@ -21,7 +23,7 @@ async function register(email, username, password) {
 }
 
 function isUserAuthenticated() {
-    const authToken = localStorage.getItem('accessToken');
+    const authToken = sessionStorage.getItem('accessToken');
     return Boolean(authToken);
 }
 
