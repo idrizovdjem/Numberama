@@ -1,12 +1,19 @@
 import { Fragment } from 'react';
 import classes from './AuthButtons.module.css';
 
+import authService from '../../../services/authService';
+
 import { NavLink } from 'react-router-dom';
 
-const AuthButtons = () => {
+const AuthButtons = (props) => {
+    const logout = () => {
+        authService.logout();
+        props.history.push('/login');
+    }
+
     return (
         <Fragment>
-            <button className={classes.NavButton}>Logout</button>
+            <button onClick={logout} className={classes.NavButton}>Logout</button>
             <button className={classes.NavButton}>
                 <NavLink to='/ranking' exact className={classes.Link}>
                     Ranking

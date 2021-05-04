@@ -27,6 +27,10 @@ function isUserAuthenticated() {
     return Boolean(authToken);
 }
 
+function logout() {
+    sessionStorage.clear();
+}
+
 function persistUser(accessToken, refreshToken) {
     sessionStorage.setItem('accessToken', accessToken);
     sessionStorage.setItem('refreshToken', refreshToken);
@@ -40,6 +44,7 @@ async function refreshSession() {
 
 const authService = {
     login,
+    logout,
     register,
     refreshSession,
     isUserAuthenticated
