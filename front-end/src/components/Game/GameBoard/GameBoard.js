@@ -7,12 +7,11 @@ import GameButtons from '../GameButtons/GameButtons';
 import NumberRow from '../NumberRow/NumberRow';
 
 const GameBoard = (props) => {
-    const initialRow = numberService.generateRow();
-    const [gameBoard, setGameBoard] = useState([initialRow]);
-    const [selectedBox, setSelectedBox] = useState(null);
-    const [firstHintBox, setFirstHintBox] = useState(null);
-    const [secondHintBox, setSecondHintBox] = useState(null);
-
+	const initialRow = numberService.generateRow();
+	const [gameBoard, setGameBoard] = useState([initialRow]);
+	const [selectedBox, setSelectedBox] = useState(null);
+	const [firstHintBox, setFirstHintBox] = useState(null);
+	const [secondHintBox, setSecondHintBox] = useState(null);
 
     const addNewRowHandle = () => {
         // generate new row of numbers and add it to the game board

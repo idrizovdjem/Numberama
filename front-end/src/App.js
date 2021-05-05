@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import ScoreContext from './context/scoreContext';
 
+import ScoreContext from './contexts/scoreContext';
 import authService from './services/authService';
 
 import Navigation from './components/Navigation/Navigation';
@@ -19,7 +19,7 @@ const App = () => {
 	}
 
 	const requireAuthentication = (Component, props) => {
-		if(authService.isUserAuthenticated() === false) {
+		if (authService.isUserAuthenticated() === false) {
 			return <Login {...props} changeAuthenticationState={changeAuthenticationState} />
 		}
 
@@ -27,7 +27,7 @@ const App = () => {
 	}
 
 	const requireAnonymous = (Component, props) => {
-		if(authService.isUserAuthenticated() === true) {
+		if (authService.isUserAuthenticated() === true) {
 			return <Game {...props} updateScore={updateScore} />
 		}
 
@@ -40,16 +40,16 @@ const App = () => {
 
 	return (
 		<HashRouter>
+			<Navigation isUserAuthenticated={isUserAuthenticated} changeAuthenticationState={changeAuthenticationState} />
 			<ScoreContext.Provider value={score}>
-				<Navigation isUserAuthenticated={isUserAuthenticated} changeAuthenticationState={changeAuthenticationState} />
 				<Switch>
-					<Route path='/login' exact render={(props) => requireAnonymous(Login, {...props, changeAuthenticationState})} />
-					<Route path='/register' exact render={(props) => requireAnonymous(Register, {...props, changeAuthenticationState })} />
-					<Route path='/game' exact render={(props) => requireAuthentication(Game, {...props, updateScore })} />
-					<Route path='/' render={(props) => requireAuthentication(Game, {...props, updateScore})} />
+					<Route path='/login' exact render={(props) => requireAnonymous(Login, { ...props, changeAuthenticationState })} />
+					<Route path='/register' exact render={(props) => requireAnonymous(Register, { ...props, changeAuthenticationState })} />
+					<Route path='/game' exact render={(props) => requireAuthentication(Game, { ...props, updateScore })} />
+					<Route path='/' render={(props) => requireAuthentication(Game, { ...props, updateScore })} />
 				</Switch>
-				<Footer />
 			</ScoreContext.Provider>
+			<Footer />
 		</HashRouter>
 	);
 }

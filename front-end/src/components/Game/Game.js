@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import scoreContext from '../../context/scoreContext';
+import scoreContext from '../../contexts/scoreContext';
 
 import GameBoard from './GameBoard/GameBoard';
 import SideBar from './SideBar/SideBar';
