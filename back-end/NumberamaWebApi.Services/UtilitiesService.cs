@@ -51,7 +51,7 @@ namespace NumberamaWebApi.Services
             }
 
             // remove "Bearer " from the token
-            var accessToken = rawToken.Substring(7);
+            var accessToken = rawToken.Substring(8);
             return accessToken;
         }
     }

@@ -64,7 +64,7 @@ namespace NumberamaWebApi.Services
                 Token = BuildToken(claims),
                 RefreshToken = BuildRefreshToken(),
                 User = user,
-                RefreshExpirationDate = DateTime.UtcNow.AddMinutes(60)
+                RefreshExpirationDate = DateTime.UtcNow.AddMinutes(30)
             };
 
             await this.dbContext.AccessTokens.AddAsync(accessToken);
