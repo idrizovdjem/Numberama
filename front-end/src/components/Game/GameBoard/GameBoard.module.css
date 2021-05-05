@@ -1,6 +1,10 @@
-.GameBoard {
+.GameBoardContainer {
     float: left;
-    width: 50%;
+    width: 75%;
+}
+
+.GameBoard {
+    width: 75%;
     margin: auto;
     height: 80vh;
     overflow-y: auto;

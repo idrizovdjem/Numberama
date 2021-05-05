@@ -1,17 +1,31 @@
-import { Fragment, useState } from 'react';
+import { useState, useEffect } from 'react';
 import classes from './GameBoard.module.css';
 
 import numberService from '../../../services/numberService.js';
 
+import Timer from '../Timer/Timer';
 import GameButtons from '../GameButtons/GameButtons';
 import NumberRow from '../NumberRow/NumberRow';
 
 const GameBoard = (props) => {
 	const initialRow = numberService.generateRow();
+    const [seconds, setSeconds] = useState(63);
 	const [gameBoard, setGameBoard] = useState([initialRow]);
 	const [selectedBox, setSelectedBox] = useState(null);
 	const [firstHintBox, setFirstHintBox] = useState(null);
 	const [secondHintBox, setSecondHintBox] = useState(null);
+
+    useEffect(() => {
+        const timer = setInterval(() => {;
+            setSeconds(oldSeconds => {
+                if(oldSeconds === 1) {
+                    // TODO: submit score
+                    clearInterval(timer);
+                }
+                return oldSeconds - 1;
+            });
+        }, 1000);
+    }, []);
 
     const addNewRowHandle = () => {
         // generate new row of numbers and add it to the game board
@@ -158,7 +172,6 @@ const GameBoard = (props) => {
 
     const clearEmptyRows = () => {
         // filter the game board with only rows that are not empty(contain at least 1 digit different than 0)
-
         setGameBoard(oldGameBoard => {
             const rows = oldGameBoard.filter(row => row.some(num => num !== 0));
             return rows;
@@ -274,7 +287,8 @@ const GameBoard = (props) => {
     });
 
     return (
-        <Fragment>
+        <div className={classes.GameBoardContainer}>
+            <Timer seconds={seconds} />
             <GameButtons
                 clearRows={clearEmptyRows}
                 addRow={addNewRowHandle}
@@ -283,7 +297,7 @@ const GameBoard = (props) => {
             <div className={classes.GameBoard}>
                 {rows}
             </div>
-        </Fragment>
+        </div>
     );
 }
 
