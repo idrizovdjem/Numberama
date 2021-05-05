@@ -8,26 +8,31 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+import Spinner from '../Shared/Spinner/Spinner';
 import AlertMessage from '../Shared/AlertMessage/AlertMessage';
 
 const Login = (props) => {
+    const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alerts, setAlerts] = useState([]);
 
-    const submitHandler = async (event) => {
+    const onSubmitHandler = async (event) => {
         event.preventDefault();
 
         const errors = authValidator.validateLoginInforation(email, password);
         setAlerts(errors);
+        setIsLoading(true);
 
-        if(errors.length !== 0) {
+        if (errors.length !== 0) {
+            setIsLoading(false);
             return;
         }
 
         const loginResponse = await authService.login(email, password);
+        setIsLoading(false);
 
-        if(loginResponse.successfull === false) {
+        if (loginResponse.successfull === false) {
             setAlerts(loginResponse.errorMessages);
             return;
         }
@@ -36,15 +41,17 @@ const Login = (props) => {
         props.history.push('/game');
     }
 
-    return (
-        <form onSubmit={submitHandler} className={classes.Form} noValidate autoComplete="off">
-            <Typography variant='h4'>Login</Typography>
+    const spinner = isLoading ? <Spinner /> : null;
+    
+    const alertElements = alerts.map((alert, index) => {
+        return <AlertMessage severity='error' message={alert} key={index} />
+    });
 
-            {
-                alerts.map((alert, index) => {
-                    return <AlertMessage severity='error' message={alert} key={index} />
-                })
-            }
+    return (
+        <form onSubmit={onSubmitHandler} className={classes.Form} noValidate autoComplete="off">
+            {spinner}
+            <Typography variant='h4'>Login</Typography>
+            {alertElements}
 
             <TextField
                 onChange={(event) => setEmail(event.target.value)}
