@@ -37,9 +37,22 @@ function persistUser(accessToken, refreshToken) {
 }
 
 async function refreshSession() {
+    const accessToken = sessionStorage.getItem('accessToken');
     const refreshToken = sessionStorage.getItem('refreshToken');
-    const response = await axios.post('/token/refresh', { refreshToken });
-    return response.data;
+
+    if(!accessToken || !refreshToken) {
+        return false;
+    }
+
+    const rawResponse = await axios.post('/token/refresh', { refreshToken });
+    const response = rawResponse.data;
+    console.log(response);
+    if(response.successfull === false) {
+        return false;
+    }
+
+    persistUser(response.data.accessToken, response.data.refreshToken);
+    return true;
 }
 
 const authService = {
