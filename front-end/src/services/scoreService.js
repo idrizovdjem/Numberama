@@ -6,13 +6,13 @@ async function submitScore(score) {
     return response;
 }
 
-async function getTopTen() {
-    const rawResponse = await axios.get('/score/gettopten');
+async function getRankings() {
+    const rawResponse = await axios.get('/score/rankings');
     return rawResponse.data;
 }
 
 const scoreService = {
-    getTopTen,
+    getRankings,
     submitScore
 };
 

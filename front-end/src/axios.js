@@ -7,7 +7,7 @@ const instance = axios.create({
 instance.interceptors.request.use(config => {
     const accessToken = sessionStorage.getItem('accessToken');
     if(accessToken) {
-        config.headers.post['authorization'] = `Bearer ${accessToken}`;
+        config.headers.common['authorization'] = `Bearer ${accessToken}`;
     }
     
     return config;

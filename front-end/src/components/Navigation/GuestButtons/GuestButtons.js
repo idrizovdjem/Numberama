@@ -17,6 +17,12 @@ const GuestButtons = () => {
                     Login
                 </NavLink>
             </button>
+
+            <button className={classes.NavButton}>
+                <NavLink className={classes.Link} to='/rankings'>
+                    Ranking
+                </NavLink>
+            </button>
         </Fragment>
     );
 }

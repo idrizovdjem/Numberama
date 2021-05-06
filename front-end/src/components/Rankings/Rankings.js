@@ -3,22 +3,16 @@ import classes from './Rankings.module.css';
 
 import scoreService from '../../services/scoreService';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-
 const Rankings = () => {
     const [rankings, setRankings] = useState([]);
+    const [userRank, setUserRank] = useState(null);
 
     useEffect(() => {
         async function fetchRankings() {
-            const response = await scoreService.getTopTen();
+            const response = await scoreService.getRankings();
             if (response.successfull) {
-                setRankings(response.data);
+                setRankings(response.data.topTen);
+                setUserRank(response.data.userRank);
             }
         }
 
@@ -27,28 +21,34 @@ const Rankings = () => {
 
     return (
         <div className={classes.Rankings}>
-            <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>№</TableCell>
-                            <TableCell>Username</TableCell>
-                            <TableCell align="right">Points</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rankings.map((rank, index) => (
-                            <TableRow>
-                                <TableCell>{index + 1}</TableCell>
-                                <TableCell component="th" scope="row">
-                                    {rank.username}
-                                </TableCell>
-                                <TableCell align="right">{rank.score}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <div className={classes.Table}>
+                <div className={classes.TableRow}>
+                    <div className={classes.TableNumber}>№</div>
+                    <div className={classes.TableUsername}>Username</div>
+                    <div className={classes.TableScore}>Score</div>
+                </div>
+
+                {
+                    rankings.map((rank, index) => {
+                        return (
+                            <div className={classes.TableRow}>
+                                <div className={classes.TableNumber}>{index + 1}</div>
+                                <div className={classes.TableUsername}>{rank.username}</div>
+                                <div className={classes.TableScore}>{rank.score}</div>
+                            </div>
+                        );
+                    })
+                }
+
+                {
+                    userRank !== null ?
+                        <div className={classes.UserTableRow}>
+                            <div className={classes.TableNumber}>...</div>
+                            <div className={classes.TableUsername}>{userRank.username}</div>
+                            <div className={classes.TableScore}>{userRank.score}</div>
+                        </div> : null
+                }
+            </div>
         </div>
     );
 }

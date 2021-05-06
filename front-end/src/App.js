@@ -51,7 +51,6 @@ const App = () => {
 					<Route path='/' render={(props) => requireAuthentication(Game, { ...props, updateScore })} />
 				</Switch>
 			</ScoreContext.Provider>
-			<Footer />
 		</HashRouter>
 	);
 }
