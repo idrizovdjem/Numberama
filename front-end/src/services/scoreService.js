@@ -6,7 +6,13 @@ async function submitScore(score) {
     return response;
 }
 
+async function getTopTen() {
+    const rawResponse = await axios.get('/score/gettopten');
+    return rawResponse.data;
+}
+
 const scoreService = {
+    getTopTen,
     submitScore
 };
 

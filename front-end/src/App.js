@@ -9,6 +9,7 @@ import Game from './components/Game/Game';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Footer from './components/Footer/Footer';
+import Rankings from './components/Rankings/Rankings';
 
 const App = () => {
 	const [score, setScore] = useState(0);
@@ -43,6 +44,7 @@ const App = () => {
 			<Navigation isUserAuthenticated={isUserAuthenticated} changeAuthenticationState={changeAuthenticationState} />
 			<ScoreContext.Provider value={score}>
 				<Switch>
+					<Route path='/rankings' exact component={Rankings} />
 					<Route path='/login' exact render={(props) => requireAnonymous(Login, { ...props, changeAuthenticationState })} />
 					<Route path='/register' exact render={(props) => requireAnonymous(Register, { ...props, changeAuthenticationState })} />
 					<Route path='/game' exact render={(props) => requireAuthentication(Game, { ...props, updateScore })} />

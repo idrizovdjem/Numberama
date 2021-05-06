@@ -16,7 +16,7 @@ const AuthButtons = (props) => {
         <Fragment>
             <button onClick={logout} className={classes.NavButton}>Logout</button>
             <button className={classes.NavButton}>
-                <NavLink to='/ranking' exact className={classes.Link}>
+                <NavLink to='/rankings' exact className={classes.Link}>
                     Ranking
                 </NavLink>
             </button>
