@@ -22,6 +22,17 @@ async function register(email, username, password) {
     return response;
 }
 
+function shouldRefresh() {
+    // get the last refreshed time
+    let lastRefreshed = parseInt(sessionStorage.getItem('lastRefreshed'));
+    // get current time and calculate the difference in minutes
+    const now = Date.now();
+    const minutesDiff = (now - lastRefreshed) / 1000 / 60;
+
+    // if the difference is less than 20 minutes, that means new game can be played without refreshing the session token(every game is 10 minutes and token life time is 30 minutes)
+    return minutesDiff > 19;
+}
+
 function isUserAuthenticated() {
     const accessToken = sessionStorage.getItem('accessToken');
     return Boolean(accessToken);
@@ -34,6 +45,7 @@ function logout() {
 function persistUser(accessToken, refreshToken) {
     sessionStorage.setItem('accessToken', accessToken);
     sessionStorage.setItem('refreshToken', refreshToken);
+    sessionStorage.setItem('lastRefreshed', Date.now());
 }
 
 async function refreshSession() {
@@ -61,6 +73,7 @@ const authService = {
     login,
     logout,
     register,
+    shouldRefresh,
     refreshSession,
     isUserAuthenticated
 };

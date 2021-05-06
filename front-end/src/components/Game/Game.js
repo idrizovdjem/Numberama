@@ -25,11 +25,13 @@ const Game = (props) => {
 
     const setupGame = async () => {
         // refresh user session
-        const isRefreshSuccessfull = await authService.refreshSession();
-        if(isRefreshSuccessfull === false) {
-            // if the refresh token is expired or is invalid
-            // redirect to login page
-            props.history.push('/login');
+        if(authService.shouldRefresh()) {
+            const isRefreshSuccessfull = await authService.refreshSession();
+            if(isRefreshSuccessfull === false) {
+                // if the refresh token is expired or is invalid
+                // redirect to login page
+                props.history.push('/login');
+            }
         }
 
         // generate row and add it to the gameboard object
