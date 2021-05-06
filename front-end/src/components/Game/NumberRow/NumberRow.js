@@ -4,6 +4,7 @@ import NumberBox from './NumberBox/NumberBox';
 
 const NumberRow = (props) => {
     const boxes = [];
+
     props.numbers.forEach((number, index) => {
         let isHint = false;
 

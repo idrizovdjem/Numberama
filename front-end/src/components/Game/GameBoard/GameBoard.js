@@ -8,18 +8,16 @@ import GameButtons from '../GameButtons/GameButtons';
 import NumberRow from '../NumberRow/NumberRow';
 
 const GameBoard = (props) => {
-	const initialRow = numberService.generateRow();
     const [seconds, setSeconds] = useState(63);
-	const [gameBoard, setGameBoard] = useState([initialRow]);
 	const [selectedBox, setSelectedBox] = useState(null);
 	const [firstHintBox, setFirstHintBox] = useState(null);
 	const [secondHintBox, setSecondHintBox] = useState(null);
 
+    // TODO: submit score
     useEffect(() => {
         const timer = setInterval(() => {;
             setSeconds(oldSeconds => {
                 if(oldSeconds === 1) {
-                    // TODO: submit score
                     clearInterval(timer);
                 }
                 return oldSeconds - 1;
@@ -30,10 +28,8 @@ const GameBoard = (props) => {
     const addNewRowHandle = () => {
         // generate new row of numbers and add it to the game board
         const newRow = numberService.generateRow();
-        setGameBoard(oldGameBoard => {
-            const rows = oldGameBoard.map(row => row);
-            rows.push(newRow);
-            return rows;
+        props.setGameBoard(oldGameBoard => {
+            return [...oldGameBoard, newRow];
         });
     }
 
@@ -69,8 +65,8 @@ const GameBoard = (props) => {
             }
 
             // get the box values
-            const firstValue = gameBoard[lowerRow][lowerColumn];
-            const secondValue = gameBoard[higherRow][higherColumn];
+            const firstValue = props.gameBoard[lowerRow][lowerColumn];
+            const secondValue = props.gameBoard[higherRow][higherColumn];
 
             // check if the boxes values are not equal or their sum is not equal to 10
             if (firstValue !== secondValue && firstValue + secondValue !== 10) {
@@ -98,7 +94,7 @@ const GameBoard = (props) => {
                 }
 
                 // get current box value
-                const currentValue = gameBoard[firstRow][firstCol];
+                const currentValue = props.gameBoard[firstRow][firstCol];
                 // if the current box value is 0, then continue
                 if (currentValue !== 0) {
                     // otherwise the pair is not possible horizontaly
@@ -112,7 +108,7 @@ const GameBoard = (props) => {
             // if the pair is possible horizontaly
             if (isPossibleHorizontaly) {
                 // update the game board by setting both values to 0
-                setGameBoard(oldGameBoard => {
+                props.setGameBoard(oldGameBoard => {
                     const newGameBoard = oldGameBoard.slice();
                     newGameBoard[selectedBox.row][selectedBox.col] = 0;
                     newGameBoard[row][col] = 0;
@@ -140,7 +136,7 @@ const GameBoard = (props) => {
             firstCol = lowerColumn;
             for (let i = firstRow + 1; i < higherRow; i++) {
                 // get the current box value
-                const currentValue = gameBoard[i][firstCol];
+                const currentValue = props.gameBoard[i][firstCol];
                 if (currentValue !== 0) {
                     // if the current box value is not 0(empty), then it's the pair is not possible verticaly
                     isPossibleVerticaly = false;
@@ -150,7 +146,7 @@ const GameBoard = (props) => {
 
             if (isPossibleVerticaly) {
                 // if the pair is possible verticaly, update the game board
-                setGameBoard(oldGameBoard => {
+                props.setGameBoard(oldGameBoard => {
                     const newGameBoard = oldGameBoard.slice();
                     newGameBoard[selectedBox.row][selectedBox.col] = 0;
                     newGameBoard[row][col] = 0;
@@ -172,7 +168,7 @@ const GameBoard = (props) => {
 
     const clearEmptyRows = () => {
         // filter the game board with only rows that are not empty(contain at least 1 digit different than 0)
-        setGameBoard(oldGameBoard => {
+        props.setGameBoard(oldGameBoard => {
             const rows = oldGameBoard.filter(row => row.some(num => num !== 0));
             return rows;
         });
@@ -182,26 +178,26 @@ const GameBoard = (props) => {
         // check every digit if it has pair horizontaly and then verticaly
 
         // check horizontaly
-        for (let i = 0; i < gameBoard.length; i++) {
-            for (let j = 0; j < gameBoard[i].length; j++) {
+        for (let i = 0; i < props.gameBoard.length; i++) {
+            for (let j = 0; j < props.gameBoard[i].length; j++) {
                 // get current check box value
-                const currentValue = gameBoard[i][j];
+                const currentValue = props.gameBoard[i][j];
                 if (currentValue === 0) {
                     continue;
                 }
 
                 let isPossible = true;
-                for (let k = i; k < gameBoard.length; k++) {
+                for (let k = i; k < props.gameBoard.length; k++) {
                     if (!isPossible) {
                         break;
                     }
 
                     // set the start for second current box column
                     const start = k === i ? j + 1 : 0;
-                    for (let l = start; l < gameBoard[k].length; l++) {
+                    for (let l = start; l < props.gameBoard[k].length; l++) {
 
                         // get second current box value
-                        const secondCurrentValue = gameBoard[k][l];
+                        const secondCurrentValue = props.gameBoard[k][l];
                         if (secondCurrentValue === 0) {
                             continue;
                         }
@@ -232,14 +228,14 @@ const GameBoard = (props) => {
         }
 
         // check verticaly
-        for (let i = 0; i < gameBoard.length; i++) {
-            for (let j = 0; j < gameBoard[i].length; j++) {
+        for (let i = 0; i < props.gameBoard.length; i++) {
+            for (let j = 0; j < props.gameBoard[i].length; j++) {
                 // get current box value
-                const currentValue = gameBoard[i][j];
+                const currentValue = props.gameBoard[i][j];
 
-                for (let k = i + 1; k < gameBoard.length; k++) {
+                for (let k = i + 1; k < props.gameBoard.length; k++) {
                     // get second current value
-                    const secondCurrentValue = gameBoard[k][j];
+                    const secondCurrentValue = props.gameBoard[k][j];
                     if (secondCurrentValue === 0) {
                         continue;
                     }
@@ -268,7 +264,7 @@ const GameBoard = (props) => {
     }
 
     const rows = [];
-    gameBoard.forEach((row, index) => {
+    props.gameBoard.forEach((row, index) => {
         let selectedBoxIndex = -1;
         if (selectedBox !== null && selectedBox.row === index) {
             selectedBoxIndex = selectedBox.col;

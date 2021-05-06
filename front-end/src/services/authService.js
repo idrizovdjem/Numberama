@@ -46,7 +46,7 @@ async function refreshSession() {
 
     const rawResponse = await axios.post('/token/refresh', { refreshToken });
     const response = rawResponse.data;
-    console.log(response);
+
     if(response.successfull === false) {
         return false;
     }
