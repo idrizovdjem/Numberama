@@ -13,7 +13,12 @@ const NumberBox = (props) => {
         props.selectBox(props.row, props.index);
     }
 
-    let backgroundColor = props.isHint ? 'yellow' : 'lightblue';
+    let backgroundColor = null;
+    if(props.isHint) {
+        backgroundColor = 'yellow';
+    } else if(props.isSelected) {
+        backgroundColor = 'lightblue';
+    }
     
     return(
         <div style={{ backgroundColor: backgroundColor }} onClick={selectBoxHandler} className={classes.NumberBox}>
