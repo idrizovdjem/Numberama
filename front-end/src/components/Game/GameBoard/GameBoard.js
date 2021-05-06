@@ -15,6 +15,7 @@ const GameBoard = (props) => {
 
     // TODO: submit score
     useEffect(() => {
+        // create timer which if your time runs out, submits your score and resets game
         const timer = setInterval(() => {;
             setSeconds(oldSeconds => {
                 if(oldSeconds === 1) {
@@ -263,14 +264,14 @@ const GameBoard = (props) => {
         }
     }
 
-    const rows = [];
-    props.gameBoard.forEach((row, index) => {
+    // map the gameboard rows to number rows
+    const rows = props.gameBoard.map((row, index) => {
         let selectedBoxIndex = -1;
         if (selectedBox !== null && selectedBox.row === index) {
             selectedBoxIndex = selectedBox.col;
         }
 
-        rows.push(
+        return (
             <NumberRow
                 selectBox={selectBoxHandler}
                 row={index}
@@ -290,6 +291,7 @@ const GameBoard = (props) => {
                 addRow={addNewRowHandle}
                 hint={hintHandler}
             />
+            
             <div className={classes.GameBoard}>
                 {rows}
             </div>
