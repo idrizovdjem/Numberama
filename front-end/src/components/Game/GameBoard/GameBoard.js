@@ -8,7 +8,7 @@ import GameButtons from '../GameButtons/GameButtons';
 import NumberRow from '../NumberRow/NumberRow';
 
 const GameBoard = (props) => {
-    const [seconds, setSeconds] = useState(600);
+    const [seconds, setSeconds] = useState(10);
 	const [selectedBox, setSelectedBox] = useState(null);
 	const [firstHintBox, setFirstHintBox] = useState(null);
 	const [secondHintBox, setSecondHintBox] = useState(null);
@@ -25,6 +25,12 @@ const GameBoard = (props) => {
             });
         }, 1000);
     }, []);
+
+    useEffect(() => {
+        if(seconds === 0) {
+            props.submit();
+        }
+    }, [seconds])
 
     const addNewRowHandle = () => {
         // generate new row of numbers and add it to the game board
@@ -119,7 +125,7 @@ const GameBoard = (props) => {
                 // update score and set selected box to null
                 setFirstHintBox(null);
                 setSecondHintBox(null);
-                props.updateScore(firstValue + secondValue);
+                props.updateScore(oldScore => oldScore +firstValue + secondValue);
                 setSelectedBox(null);
                 return;
             }
@@ -157,7 +163,7 @@ const GameBoard = (props) => {
                 // update score and set selected box to null
                 setFirstHintBox(null);
                 setSecondHintBox(null);
-                props.updateScore(firstValue + secondValue);
+                props.updateScore(oldScore => oldScore +firstValue + secondValue);
                 setSelectedBox(null);
                 return;
             }

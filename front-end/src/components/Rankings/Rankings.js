@@ -31,7 +31,7 @@ const Rankings = () => {
                 {
                     rankings.map((rank, index) => {
                         return (
-                            <div className={classes.TableRow}>
+                            <div key={index} className={classes.TableRow}>
                                 <div className={classes.TableNumber}>{index + 1}</div>
                                 <div className={classes.TableUsername}>{rank.username}</div>
                                 <div className={classes.TableScore}>{rank.score}</div>

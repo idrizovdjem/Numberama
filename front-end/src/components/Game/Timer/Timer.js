@@ -6,8 +6,8 @@ const Timer = (props) => {
     const seconds = props.seconds - minutes * 60;
 
     // convert the units to time format
-    const stringMinutes = minutes === 10 ? minutes : `0${minutes}`;
-    const stringSeconds = seconds > 10 ? seconds : `0${seconds}`;
+    const stringMinutes = minutes >= 10 ? minutes : `0${minutes}`;
+    const stringSeconds = seconds >= 10 ? seconds : `0${seconds}`;
 
     return (
         <div className={classes.Timer}>
