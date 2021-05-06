@@ -23,8 +23,8 @@ async function register(email, username, password) {
 }
 
 function isUserAuthenticated() {
-    const authToken = sessionStorage.getItem('accessToken');
-    return Boolean(authToken);
+    const accessToken = sessionStorage.getItem('accessToken');
+    return Boolean(accessToken);
 }
 
 function logout() {
@@ -41,6 +41,7 @@ async function refreshSession() {
     const refreshToken = sessionStorage.getItem('refreshToken');
 
     if(!accessToken || !refreshToken) {
+        sessionStorage.clear();
         return false;
     }
 
@@ -48,6 +49,7 @@ async function refreshSession() {
     const response = rawResponse.data;
 
     if(response.successfull === false) {
+        sessionStorage.clear();
         return false;
     }
 

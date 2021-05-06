@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HashRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import ScoreContext from './contexts/scoreContext';
 import authService from './services/authService';
@@ -23,7 +23,7 @@ const App = () => {
 		if (authService.isUserAuthenticated() === false) {
 			return <Login {...props} changeAuthenticationState={changeAuthenticationState} />
 		}
-
+		
 		return <Component {...props} />;
 	}
 
@@ -40,7 +40,7 @@ const App = () => {
 	}
 
 	return (
-		<HashRouter>
+		<BrowserRouter>
 			<Navigation isUserAuthenticated={isUserAuthenticated} changeAuthenticationState={changeAuthenticationState} />
 			<ScoreContext.Provider value={score}>
 				<Switch>
@@ -51,7 +51,7 @@ const App = () => {
 					<Route path='/' render={(props) => requireAuthentication(Game, { ...props, updateScore })} />
 				</Switch>
 			</ScoreContext.Provider>
-		</HashRouter>
+		</BrowserRouter>
 	);
 }
 

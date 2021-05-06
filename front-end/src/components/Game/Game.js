@@ -30,14 +30,11 @@ const Game = (props) => {
             // if the refresh token is expired or is invalid
             // redirect to login page
             props.history.push('/login');
-            return;
         }
 
         // generate row and add it to the gameboard object
         const firstRow = numberService.generateRow();
-        setGameBoard(oldGameBoard => {
-            return [firstRow];
-        });
+        setGameBoard([firstRow]);
     }
 
     return (
