@@ -19,9 +19,11 @@ namespace NumberamaWebApi.Services
             this.dbContext = dbContext;
         }
 
-        public IEnumerable<ScoreRankingViewModel> GetTopTen()
+        public RankingsViewModel GetRankings(string userId)
         {
-            return this.dbContext.GameResults
+            var rankingModel = new RankingsViewModel();
+
+            rankingModel.TopTen = this.dbContext.GameResults
                 .OrderByDescending(gr => gr.Score)
                 .Take(10)
                 .Select(gr => new ScoreRankingViewModel()
@@ -31,6 +33,32 @@ namespace NumberamaWebApi.Services
                     SubmitedAt = gr.SubmitedAt
                 }) 
                 .ToList();
+
+            if(userId != null)
+            {
+                var username = this.dbContext.Users
+                    .First(u => u.Id == userId).Username;
+
+                if(rankingModel.TopTen.Any(r => r.Username == username))
+                {
+                    return rankingModel;
+                }
+
+                var userBestScore = this.dbContext.GameResults
+                    .Where(gr => gr.UserId == userId)
+                    .OrderByDescending(gr => gr.Score)
+                    .Select(gr => new ScoreRankingViewModel()
+                    {
+                        Username = username,
+                        Score = gr.Score,
+                        SubmitedAt = gr.SubmitedAt
+                    })
+                    .FirstOrDefault();
+
+                rankingModel.UserRank = userBestScore;
+            }
+
+            return rankingModel;
         }
 
         public async Task<GameResult> SubmitAsync(string userId, int points)

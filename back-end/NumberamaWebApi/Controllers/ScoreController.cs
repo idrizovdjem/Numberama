@@ -56,11 +56,13 @@ namespace NumberamaWebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTopTen()
+        public IActionResult Rankings()
         {
+            var userId = User.FindFirst("id")?.Value;
+            var rankingsResult = this.scoreService.GetRankings(userId);
+
             var response = new ResponseModel();
-            var topResults = this.scoreService.GetTopTen();
-            response.Data = topResults;
+            response.Data = rankingsResult;
             return Json(response);
         }
     }

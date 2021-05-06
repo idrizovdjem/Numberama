@@ -3,10 +3,10 @@ using System.Text;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 using NumberamaWebApi.Services.Contracts;
-using Microsoft.AspNetCore.Http;
 
 namespace NumberamaWebApi.Services
 {
@@ -51,7 +51,7 @@ namespace NumberamaWebApi.Services
             }
 
             // remove "Bearer " from the token
-            var accessToken = rawToken.Substring(8);
+            var accessToken = rawToken.Substring(7);
             return accessToken;
         }
     }
