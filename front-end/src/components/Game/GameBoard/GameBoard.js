@@ -8,7 +8,7 @@ import GameButtons from '../GameButtons/GameButtons';
 import NumberRow from '../NumberRow/NumberRow';
 
 const GameBoard = (props) => {
-    const [seconds, setSeconds] = useState(10);
+    const [seconds, setSeconds] = useState(180);
 	const [selectedBox, setSelectedBox] = useState(null);
 	const [firstHintBox, setFirstHintBox] = useState(null);
 	const [secondHintBox, setSecondHintBox] = useState(null);
