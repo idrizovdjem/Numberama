@@ -5,15 +5,13 @@ import scoreService from '../../services/scoreService';
 
 const Rankings = () => {
     const [rankings, setRankings] = useState([]);
-    const [userRank, setUserRank] = useState(null);
     const [userIndex, setUserIndex] = useState(-1);
 
     useEffect(() => {
         async function fetchRankings() {
             const response = await scoreService.getRankings();
             if (response.successfull) {
-                setRankings(response.data.topTen);
-                setUserRank(response.data.userRank);
+                setRankings(response.data.usersRanks);
                 setUserIndex(response.data.userRankIndex);
             }
         }
@@ -42,15 +40,6 @@ const Rankings = () => {
                             </div>
                         );
                     })
-                }
-
-                {
-                    userRank !== null ?
-                        <div className={classes.UserTableRow}>
-                            <div className={classes.TableNumber}>{userRank.position}</div>
-                            <div className={classes.TableUsername}>{userRank.username}</div>
-                            <div className={classes.TableScore}>{userRank.score}</div>
-                        </div> : null
                 }
             </div>
         </div>
