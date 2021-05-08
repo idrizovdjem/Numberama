@@ -23,7 +23,7 @@ const Rankings = () => {
         <div className={classes.Rankings}>
             <div className={classes.Table}>
                 <div className={classes.TableRow}>
-                    <div className={classes.TableNumber}>№</div>
+                    <div className={classes.TableNumber}>Rank</div>
                     <div className={classes.TableUsername}>Username</div>
                     <div className={classes.TableScore}>Score</div>
                 </div>
@@ -32,7 +32,7 @@ const Rankings = () => {
                     rankings.map((rank, index) => {
                         return (
                             <div key={index} className={classes.TableRow}>
-                                <div className={classes.TableNumber}>{index + 1}</div>
+                                <div className={classes.TableNumber}>{rank.position}</div>
                                 <div className={classes.TableUsername}>{rank.username}</div>
                                 <div className={classes.TableScore}>{rank.score}</div>
                             </div>
@@ -43,7 +43,7 @@ const Rankings = () => {
                 {
                     userRank !== null ?
                         <div className={classes.UserTableRow}>
-                            <div className={classes.TableNumber}>...</div>
+                            <div className={classes.TableNumber}>{userRank.position}</div>
                             <div className={classes.TableUsername}>{userRank.username}</div>
                             <div className={classes.TableScore}>{userRank.score}</div>
                         </div> : null
