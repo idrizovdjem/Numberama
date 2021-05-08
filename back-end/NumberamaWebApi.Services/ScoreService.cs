@@ -42,6 +42,10 @@ namespace NumberamaWebApi.Services
 
                 if(rankingModel.TopTen.Any(r => r.Username == username))
                 {
+                    var model = rankingModel.TopTen.First(m => m.Username == username);
+                    var index = rankingModel.TopTen.IndexOf(model);
+                    rankingModel.UserRankIndex = (byte)index;
+
                     return rankingModel;
                 }
 
@@ -54,7 +58,7 @@ namespace NumberamaWebApi.Services
                         Score = gr.Score,
                         SubmitedAt = gr.SubmitedAt,
                         Position = this.dbContext.GameResults
-                            .Count(x => x.Score > gr.Score)
+                            .Count(x => x.Score > gr.Score) + 1
                     })
                     .FirstOrDefault();
 
