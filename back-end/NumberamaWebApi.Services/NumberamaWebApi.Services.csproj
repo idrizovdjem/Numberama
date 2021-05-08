@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <None Remove="Contracts\IScoreService.cs~RF14845a6a.TMP" />
+    <None Remove="ScoreService.cs~RF3776259.TMP" />
     <None Remove="TokenAuthService.cs~RF102abe8.TMP" />
     <None Remove="TokenAuthService.cs~RF14dbd446.TMP" />
     <None Remove="TokenAuthService.cs~RF4ed8a58.TMP" />

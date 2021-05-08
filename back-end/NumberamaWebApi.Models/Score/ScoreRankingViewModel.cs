@@ -9,5 +9,7 @@ namespace NumberamaWebApi.Models.Score
         public int Score { get; set; }
 
         public DateTime SubmitedAt { get; set; }
+
+        public int Position { get; set; }
     }
 }

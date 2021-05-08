@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+
 using NumberamaWebApi.Data;
 using NumberamaWebApi.Data.Models;
 using NumberamaWebApi.Models.Score;
@@ -30,7 +29,9 @@ namespace NumberamaWebApi.Services
                 {
                     Username = gr.User.Username,
                     Score = gr.Score,
-                    SubmitedAt = gr.SubmitedAt
+                    SubmitedAt = gr.SubmitedAt,
+                    Position = this.dbContext.GameResults
+                        .Count(x => x.Score > gr.Score) + 1
                 }) 
                 .ToList();
 
@@ -51,7 +52,9 @@ namespace NumberamaWebApi.Services
                     {
                         Username = username,
                         Score = gr.Score,
-                        SubmitedAt = gr.SubmitedAt
+                        SubmitedAt = gr.SubmitedAt,
+                        Position = this.dbContext.GameResults
+                            .Count(x => x.Score > gr.Score)
                     })
                     .FirstOrDefault();
 

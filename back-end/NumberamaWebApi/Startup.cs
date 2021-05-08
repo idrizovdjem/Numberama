@@ -2,6 +2,7 @@ using System;
 using System.Text;
 
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +16,6 @@ using NumberamaWebApi.Data;
 using NumberamaWebApi.Services;
 using NumberamaWebApi.Models.Token;
 using NumberamaWebApi.Services.Contracts;
-using Microsoft.AspNetCore.Mvc;
 
 namespace NumberamaWebApi
 {
