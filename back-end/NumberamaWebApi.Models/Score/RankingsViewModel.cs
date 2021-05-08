@@ -4,10 +4,8 @@ namespace NumberamaWebApi.Models.Score
 {
     public class RankingsViewModel
     {
-        public IList<ScoreRankingViewModel> TopTen { get; set; }
+        public IList<ScoreRankingViewModel> UsersRanks { get; set; }
 
-        public ScoreRankingViewModel UserRank { get; set; }
-
-        public byte? UserRankIndex { get; set; }
+        public int? UserRankIndex { get; set; }
     }
 }

@@ -21,8 +21,7 @@ namespace NumberamaWebApi.Services
         public RankingsViewModel GetRankings(string userId)
         {
             var rankingModel = new RankingsViewModel();
-
-            rankingModel.TopTen = this.dbContext.GameResults
+            rankingModel.UsersRanks = this.dbContext.GameResults
                 .OrderByDescending(gr => gr.Score)
                 .Take(10)
                 .Select(gr => new ScoreRankingViewModel()
@@ -32,37 +31,43 @@ namespace NumberamaWebApi.Services
                     SubmitedAt = gr.SubmitedAt,
                     Position = this.dbContext.GameResults
                         .Count(x => x.Score > gr.Score) + 1
-                }) 
+                })
                 .ToList();
 
             if(userId != null)
             {
                 var username = this.dbContext.Users
                     .First(u => u.Id == userId).Username;
-
-                if(rankingModel.TopTen.Any(r => r.Username == username))
+                
+                // check if the user is in top ten
+                if(rankingModel.UsersRanks.Any(r => r.Username == username))
                 {
-                    var model = rankingModel.TopTen.First(m => m.Username == username);
-                    var index = rankingModel.TopTen.IndexOf(model);
-                    rankingModel.UserRankIndex = (byte)index;
-
-                    return rankingModel;
+                    var userModel = rankingModel.UsersRanks
+                        .First(r => r.Username == username);
+                    var index = rankingModel.UsersRanks.IndexOf(userModel);
+                    rankingModel.UserRankIndex = index;
                 }
+                else
+                {
+                    var userModel = this.dbContext.GameResults
+                        .Where(gr => gr.UserId == userId)
+                        .OrderByDescending(gr => gr.Score)
+                        .Select(gr => new ScoreRankingViewModel()
+                        {
+                            Score = gr.Score,
+                            Position = this.dbContext.GameResults
+                                .Count(x => x.Score > gr.Score) + 1,
+                            SubmitedAt = gr.SubmitedAt,
+                            Username = username
+                        })
+                        .FirstOrDefault();
 
-                var userBestScore = this.dbContext.GameResults
-                    .Where(gr => gr.UserId == userId)
-                    .OrderByDescending(gr => gr.Score)
-                    .Select(gr => new ScoreRankingViewModel()
+                    if(userModel != null)
                     {
-                        Username = username,
-                        Score = gr.Score,
-                        SubmitedAt = gr.SubmitedAt,
-                        Position = this.dbContext.GameResults
-                            .Count(x => x.Score > gr.Score) + 1
-                    })
-                    .FirstOrDefault();
-
-                rankingModel.UserRank = userBestScore;
+                        rankingModel.UsersRanks.Add(userModel);
+                        rankingModel.UserRankIndex = rankingModel.UsersRanks.Count - 1;
+                    }
+                }
             }
 
             return rankingModel;

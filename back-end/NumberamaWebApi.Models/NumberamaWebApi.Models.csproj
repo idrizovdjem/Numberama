@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Score\RankingsViewModel.cs~RF5072585.TMP" />
     <None Remove="User\UserRegisterInputModel.cs~RF5012033.TMP" />
   </ItemGroup>
 
