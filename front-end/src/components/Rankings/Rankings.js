@@ -6,6 +6,7 @@ import scoreService from '../../services/scoreService';
 const Rankings = () => {
     const [rankings, setRankings] = useState([]);
     const [userRank, setUserRank] = useState(null);
+    const [userIndex, setUserIndex] = useState(-1);
 
     useEffect(() => {
         async function fetchRankings() {
@@ -13,6 +14,7 @@ const Rankings = () => {
             if (response.successfull) {
                 setRankings(response.data.topTen);
                 setUserRank(response.data.userRank);
+                setUserIndex(response.data.userRankIndex);
             }
         }
 
@@ -30,8 +32,10 @@ const Rankings = () => {
 
                 {
                     rankings.map((rank, index) => {
+                        const tableClass = index === userIndex ? classes.UserTableRow : classes.TableRow;
+
                         return (
-                            <div key={index} className={classes.TableRow}>
+                            <div key={index} className={tableClass}>
                                 <div className={classes.TableNumber}>{rank.position}</div>
                                 <div className={classes.TableUsername}>{rank.username}</div>
                                 <div className={classes.TableScore}>{rank.score}</div>
