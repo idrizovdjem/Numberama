@@ -16,7 +16,7 @@ const App = () => {
 
 	const requireAuthentication = (Component, props) => {
 		if (authService.isUserAuthenticated() === false) {
-			return <Login {...props} changeAuthenticationState={changeAuthenticationState} />
+			return <Login {...props} changeAuthenticationState={changeAuthenticationState} setMobileButtonsVisible={setMobileButtonsVisible} />
 		}
 
 		return <Component {...props} />;
