@@ -23,6 +23,8 @@ namespace NumberamaWebApi.Services
 
         public List<string> GetModelStateErorrs(ModelStateDictionary modelState)
         {
+            // get all validation errors from ModelState and return the in list of strings
+
             var modelErrors = new List<string>();
             foreach (var currentModelState in modelState.Values)
             {
