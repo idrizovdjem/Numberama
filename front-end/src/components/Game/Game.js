@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import { INITIAL_SECONDS } from '../../constants/GameConstants';
+
 import authService from '../../services/authService';
 import scoreService from '../../services/scoreService';
 import numberService from '../../services/numberService';
@@ -10,13 +12,14 @@ import SideBar from './SideBar/SideBar';
 const Game = (props) => {
 	const [gameBoard, setGameBoard] = useState([]);
     const [score, setScore] = useState(0);
+    const [seconds, setSeconds] = useState(INITIAL_SECONDS);
 
     useEffect(() => {
         setupGame();
     }, []);
 
     const submitScore = async () => {
-        const response = await scoreService.submitScore(score);
+        await scoreService.submitScore(score);
         props.history.push('/rankings');
     }
 
@@ -34,12 +37,21 @@ const Game = (props) => {
         // generate row and add it to the gameboard object
         const firstRow = numberService.generateRow();
         setGameBoard([firstRow]);
+        setSeconds(INITIAL_SECONDS);
+        setScore(0);
     }
 
     return (
         <div>
             <SideBar score={score} submit={submitScore} setup={setupGame} />
-            <GameBoard updateScore={setScore} gameBoard={gameBoard} setGameBoard={setGameBoard} submit={submitScore} />
+            <GameBoard 
+                updateScore={setScore} 
+                gameBoard={gameBoard} 
+                setGameBoard={setGameBoard} 
+                submit={submitScore} 
+                seconds={seconds}
+                setSeconds={setSeconds}
+            />
         </div>
     );
 }

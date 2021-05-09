@@ -8,16 +8,14 @@ import GameButtons from '../GameButtons/GameButtons';
 import NumberRow from '../NumberRow/NumberRow';
 
 const GameBoard = (props) => {
-    const [seconds, setSeconds] = useState(180);
 	const [selectedBox, setSelectedBox] = useState(null);
 	const [firstHintBox, setFirstHintBox] = useState(null);
 	const [secondHintBox, setSecondHintBox] = useState(null);
 
-    // TODO: submit score
     useEffect(() => {
         // create timer which if your time runs out, submits your score and resets game
         const timer = setInterval(() => {;
-            setSeconds(oldSeconds => {
+            props.setSeconds(oldSeconds => {
                 if(oldSeconds === 1) {
                     clearInterval(timer);
                 }
@@ -27,10 +25,10 @@ const GameBoard = (props) => {
     }, []);
 
     useEffect(() => {
-        if(seconds === 0) {
+        if(props.seconds === 0) {
             props.submit();
         }
-    }, [seconds])
+    }, [props.seconds])
 
     const addNewRowHandle = () => {
         // generate new row of numbers and add it to the game board
@@ -291,7 +289,7 @@ const GameBoard = (props) => {
 
     return (
         <div className={classes.GameBoardContainer}>
-            <Timer seconds={seconds} />
+            <Timer seconds={props.seconds} />
             <GameButtons
                 clearRows={clearEmptyRows}
                 addRow={addNewRowHandle}

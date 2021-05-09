@@ -7,12 +7,20 @@ const SideBar = (props) => {
         <div className={classes.SideBar}>
             <p className={classes.Score}>Score: {props.score}</p>
             <div className={classes.ButtonRow}>
-                <Button onClick={props.submit} variant="contained" color="primary">
+                <Button 
+                    onClick={props.submit} 
+                    variant="contained"
+                    color="primary"
+                >
                     Submit Score
                 </Button>
             </div>
 
-            <Button variant="contained" color="primary">
+            <Button 
+                onClick={props.setup} 
+                variant="contained" 
+                color="primary"
+            >
                 Reset
             </Button>
         </div>
