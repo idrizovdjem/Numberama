@@ -10,3 +10,14 @@
     overflow-y: auto;
     margin-left: 25vh;
 }
+
+@media screen and (max-width: 400px) {
+    .GameBoardContainer {
+        width: 100%;
+    }
+
+    .GameBoard {
+        width: 90%;
+        margin-left: 5%;
+    }
+}

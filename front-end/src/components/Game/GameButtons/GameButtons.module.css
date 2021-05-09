@@ -5,7 +5,7 @@
 }
 
 .GameButton {
-    width: 15%;
+    width: 25%;
     font-size: 4vh;
     margin: 1vh;
 }
@@ -17,4 +17,10 @@
 .Icon {
     float: left;
     margin-top: 0.5vh;
+}
+
+@media screen and (max-width: 400px) {
+    .GameButton {
+        width: 90%;
+    }
 }

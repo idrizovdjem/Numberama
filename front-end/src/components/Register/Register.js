@@ -45,6 +45,7 @@ const Register = (props) => {
         }
 
         props.changeAuthenticationState(true);
+        props.setMobileButtonsVisible(false);
         props.history.push('/game');
     }
 

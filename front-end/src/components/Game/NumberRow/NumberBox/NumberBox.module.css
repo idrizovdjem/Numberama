@@ -23,3 +23,9 @@
     margin-top: 1.5vh;
     margin-left: 3.5vh;
 }
+
+@media screen and (max-width: 400px) {
+    .Cross {
+        margin-left: 1vh;
+    }
+}

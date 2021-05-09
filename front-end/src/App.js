@@ -11,6 +11,7 @@ import Rankings from './components/Rankings/Rankings';
 
 const App = () => {
 	const [isUserAuthenticated, setIsUserAuthenticated] = useState(authService.isUserAuthenticated());
+	const [mobileButtonsVisible, setMobileButtonsVisible] = useState(false);
 
 	const requireAuthentication = (Component, props) => {
 		if (authService.isUserAuthenticated() === false) {
@@ -34,11 +35,16 @@ const App = () => {
 
 	return (
 		<BrowserRouter>
-			<Navigation isUserAuthenticated={isUserAuthenticated} changeAuthenticationState={changeAuthenticationState} />
+			<Navigation 
+				isUserAuthenticated={isUserAuthenticated} 
+				changeAuthenticationState={changeAuthenticationState}
+				mobileButtonsVisible={mobileButtonsVisible}
+				setMobileButtonsVisible={setMobileButtonsVisible}
+			/>
 			<Switch>
 				<Route path='/rankings' exact component={Rankings} />
-				<Route path='/login' exact render={(props) => requireAnonymous(Login, { ...props, changeAuthenticationState })} />
-				<Route path='/register' exact render={(props) => requireAnonymous(Register, { ...props, changeAuthenticationState })} />
+				<Route path='/login' exact render={(props) => requireAnonymous(Login, { ...props, changeAuthenticationState, setMobileButtonsVisible })} />
+				<Route path='/register' exact render={(props) => requireAnonymous(Register, { ...props, changeAuthenticationState, setMobileButtonsVisible })} />
 				<Route path='/game' exact render={(props) => requireAuthentication(Game, { ...props })} />
 				<Route path='/' render={(props) => requireAuthentication(Game, { ...props })} />
 			</Switch>

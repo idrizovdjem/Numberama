@@ -15,3 +15,16 @@
     width: 100%;
     margin-bottom: 10px;
 }
+
+@media screen and (max-width: 400px) {
+    .SideBar {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    .ButtonRow {
+        display: inline;
+        margin: 0 10px;
+    }
+}

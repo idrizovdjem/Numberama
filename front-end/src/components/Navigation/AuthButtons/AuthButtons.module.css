@@ -16,3 +16,49 @@
     color: white;
     text-decoration: none;
 }
+
+.Burger {
+    display: none;
+    width: 10%;
+    margin-right: 2vh;
+    float: right;
+}
+
+.Slice {
+    width: 100%;
+    background-color: white;
+    height: 1vh;
+    margin: 0.7vh 0;
+    border-radius: 1px;
+}
+
+.MobileButtons {
+    display: none;
+}
+
+.MobileNavButton {
+    width: 100%;
+    height: 6vh;
+    text-align: left;
+    border: none;
+    font-size: 4.6vh;
+    color: #145DA0;
+}
+
+@media screen and (max-width: 400px) {
+    .NavButton {
+        display: none;
+    }
+
+    .Burger  {
+        display: block;
+    }
+
+    .MobileButtons {
+        display: block;
+    }
+
+    .Link {
+        color: #145DA0;
+    }
+}
