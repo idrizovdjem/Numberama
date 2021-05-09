@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import authService from './services/authService';
 
+import Footer from './components/Footer/Footer';
 import Navigation from './components/Navigation/Navigation';
 import Game from './components/Game/Game';
 import Login from './components/Login/Login';
@@ -48,6 +49,8 @@ const App = () => {
 				<Route path='/game' exact render={(props) => requireAuthentication(Game, { ...props })} />
 				<Route path='/' render={(props) => requireAuthentication(Game, { ...props })} />
 			</Switch>
+
+			<Footer />
 		</BrowserRouter>
 	);
 }
